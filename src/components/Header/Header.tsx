@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { routes } from "./routes";
 import {
   Button,
@@ -20,6 +20,14 @@ import { div } from "framer-motion/client";
 import LandingCTA from "../LandingCTA";
 
 export default function Header() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <HeaderComponent />
+    </Suspense>
+  );
+}
+
+function HeaderComponent() {
   const pathname = usePathname();
   const homePath = pathname == "/";
   const [revealHeader, setRevealHeader] = useState(false);
