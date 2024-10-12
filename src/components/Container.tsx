@@ -1,6 +1,6 @@
 import React from "react";
 type props = {
-  children: React.ReactElement;
+  children: React.ReactNode;
   className?: string;
 };
 export default function Container({ children, className }: props) {
