@@ -98,8 +98,8 @@ export default function Header() {
         </Link>
       </div>
 
-      {revealHeader ? (
-        <div className="flex items-center gap-5">
+      <div className="flex items-center gap-5">
+        {revealHeader ? (
           <div className="hidden md:flex gap-5">
             {routes.map((item, index) => (
               <Link
@@ -113,58 +113,62 @@ export default function Header() {
               </Link>
             ))}
           </div>
+        ) : null}
 
-          {/* menu */}
-          <section
-            className={`md:hidden ${
-              isMenuOpen ? "visible" : "invisible"
-            } fixed top-[65px] w-full h-[calc(100%-65px)] bg-white left-0 py-1`}
-          >
-            {routes.map((item, index) => (
-              <Link
-                href={item.route}
-                key={item.id}
-                className={`hover:text-gray-500 ${
-                  pathname == item.route ? "text-gray-500" : ""
-                }`}
-              >
-                <div className="p-2 px-4">
-                  <p className="font-medium text-md">{item.name}</p>
-                </div>
-              </Link>
-            ))}
-            {/* 
-                  onClick={openModal}
-            
-            */}
-            <ClientOnly>
-              {!auth ? <LandingCTA className="p-1 text-sm" /> : null}
-            </ClientOnly>
-          </section>
-          {/* menu ends */}
+        {/* menu */}
+        <section
+          className={`md:hidden ${
+            isMenuOpen ? "visible" : "invisible"
+          } fixed top-[65px] w-full h-[calc(100%-65px)] bg-white left-0 py-1`}
+        >
+          {routes.map((item, index) => (
+            <Link
+              href={item.route}
+              key={item.id}
+              className={`hover:text-gray-500 ${
+                pathname == item.route ? "text-gray-500" : ""
+              }`}
+            >
+              <div className="p-2 px-4">
+                <p className="font-medium text-md">{item.name}</p>
+              </div>
+            </Link>
+          ))}
           <ClientOnly>
             {!auth ? (
-              <LandingCTA className="p-1 text-sm" />
-            ) : (
-              <div onClick={logout} className="cursor-pointer">
-                <Image
-                  alt="Profile image"
-                  width={1000}
-                  height={1000}
-                  src={auth.user.dp || "/images/user.png"}
-                  className="ml-2 mt-1 w-[30px] aspect-square rounded-full"
-                />
+              <div className="p-4">
+                <LandingCTA className="p-1 text-sm transition-none  w-full" />
               </div>
-            )}
+            ) : null}
           </ClientOnly>
-          <Button
-            startContent={<i className="fa-solid fa-bars"></i>}
-            className={`bg-inherit md:hidden`}
-            isIconOnly={true}
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          ></Button>
-        </div>
-      ) : null}
+        </section>
+        {/* menu ends */}
+        <ClientOnly>
+          {!auth ? (
+            <>
+              {revealHeader ? (
+                <LandingCTA className="p-1 text-sm hidden md:flex" />
+              ) : null}
+            </>
+          ) : (
+            <div onClick={logout} className="cursor-pointer">
+              <Image
+                alt="Profile image"
+                width={1000}
+                height={1000}
+                src={auth.user.dp || "/images/user.png"}
+                className="ml-2 mt-1 w-[30px] aspect-square rounded-full"
+              />
+            </div>
+          )}
+        </ClientOnly>
+        <Button
+          startContent={<i className="fa-solid fa-bars"></i>}
+          className={`bg-inherit md:hidden`}
+          isIconOnly={true}
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+        ></Button>
+      </div>
       <Modal
         size="xl"
         isOpen={isOpen}

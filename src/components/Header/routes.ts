@@ -5,5 +5,5 @@ type route = {
 };
 export const routes: route[] = [
   { id: 1, name: "Home", route: "/" },
-  { id: 2, name: "Reminders", route: "/reminders" },
+  // { id: 2, name: "Reminders", route: "/reminders" },
 ];

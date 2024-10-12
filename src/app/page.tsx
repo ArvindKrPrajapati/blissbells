@@ -23,7 +23,7 @@ const images = [
 export default function Home() {
   return (
     <>
-      <div className={`md:h-[100vh] h-[calc(100vh-65px)] md:flex bg-svg`}>
+      <div className={`md:h-[100dvh] h-[100dvh] md:flex bg-svg`}>
         <div className="md:w-[45%] w-full md:pl-[100px] md:pt-[170px] md:block flex justify-center items-center h-full p-12">
           <div>
             <h1
@@ -34,13 +34,13 @@ export default function Home() {
               </span>
             </h1>
             <h2 className="py-8">
-              <p className="text-xl mb-8 animate-fade-in-up bg-gradient-to-r from-zinc-950 to-zinc-900 bg-clip-text text-transparent font-semibold">
+              <p className="md:text-xl text-lg mb-8 animate-fade-in-up bg-gradient-to-r from-zinc-950 to-zinc-900 bg-clip-text text-transparent font-semibold">
                 BlissBells keeps your celebrations close, ensuring no special
                 day is ever forgotten.
               </p>
             </h2>
+            <LandingCTA />
           </div>
-          <LandingCTA />
         </div>
         <div className="w-[55%] overflow-hidden hidden md:block">
           <div className="relative flex items-center justify-center h-full">
