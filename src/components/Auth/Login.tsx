@@ -42,7 +42,6 @@ export default function Login({ closeModal }: props) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!isValidEmail || !isValidPassword) {
       return;
     }
@@ -61,10 +60,9 @@ export default function Login({ closeModal }: props) {
           res
         )}; expires=${expirationDate.toUTCString()}; path=/`;
 
-        toast.success("Login Successfully");
-        closeModal();
-
         router.refresh();
+        router.replace("/blissbells");
+        toast.success("Login Successfully");
       } else {
         setLoading(false);
         toast.error(res.error);

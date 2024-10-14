@@ -29,10 +29,9 @@ export default function GoogleSignIn({ closeModal }: props) {
           res
         )}; expires=${expirationDate.toUTCString()}; path=/`;
 
-        toast.success("Login Successfully");
-        closeModal();
-
         router.refresh();
+        router.replace("/blissbells");
+        toast.success("Login Successfully");
       }
     } catch (error: any) {
       toast.error(error.message);

@@ -151,25 +151,25 @@ function HeaderComponent() {
           </ClientOnly>
         </section>
         {/* menu ends */}
-        <ClientOnly>
-          {!auth ? (
-            <>
-              {revealHeader ? (
+        {revealHeader ? (
+          <ClientOnly>
+            {!auth ? (
+              <>
                 <LandingCTA className="p-1 text-sm hidden md:flex" />
-              ) : null}
-            </>
-          ) : (
-            <div onClick={logout} className="cursor-pointer">
-              <Image
-                alt="Profile image"
-                width={1000}
-                height={1000}
-                src={auth.user.dp || "/images/user.png"}
-                className="ml-2 mt-1 w-[30px] aspect-square rounded-full"
-              />
-            </div>
-          )}
-        </ClientOnly>
+              </>
+            ) : (
+              <div onClick={logout} className="cursor-pointer">
+                <Image
+                  alt="Profile image"
+                  width={1000}
+                  height={1000}
+                  src={auth.user.dp || "/images/user.png"}
+                  className="ml-2 mt-1 w-[30px] aspect-square rounded-full"
+                />
+              </div>
+            )}
+          </ClientOnly>
+        ) : null}
         <Button
           startContent={<i className="fa-solid fa-bars"></i>}
           className={`bg-inherit md:hidden`}
