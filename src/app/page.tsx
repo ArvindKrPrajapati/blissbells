@@ -24,10 +24,10 @@ const images = [
 ];
 export default function Home() {
   const FeatureCard = ({ icon, title, description }: any) => (
-    <div className="bg-gray-100 bg-opacity-80 p-6 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:rotate-1">
+    <div className="bg-gradient-to-br from-red-200 to-pink-200 bg-opacity-80 p-6 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:rotate-1">
       <i className={`${icon} text-3xl  w-12 h-12 text-red-500 mb-4`} />
-      <h3 className="text-xl font-semibold mb-2">{title}</h3>
-      <p className="text-gray-600">{description}</p>
+      <h3 className="text-xl font-semibold mb-2 text-pink-900">{title}</h3>
+      <p className="text-pink-700">{description}</p>
     </div>
   );
   return (
