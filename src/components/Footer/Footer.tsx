@@ -1,3 +1,5 @@
+import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 export default function Footer() {
@@ -5,8 +7,16 @@ export default function Footer() {
     <footer className="bg-gray-800 text-white py-12">
       <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
         <div>
-          <h3 className="text-2xl font-bold mb-4">BlissBells</h3>
-          <p className="mb-4">
+          <Link href="/">
+            <Image
+              width={1000}
+              height={1000}
+              className="h-[50px] w-[160px]"
+              src={"/images/logo.png"}
+              alt="Logo"
+            />
+          </Link>
+          <p className="mt-4 md:mb-4">
             Never miss a special moment again. Strengthen your relationships
             with timely reminders.
           </p>
@@ -66,7 +76,7 @@ export default function Footer() {
                 info@blissbells.com
               </a>
             </li>
-            <li className="flex items-center">
+            {/* <li className="flex items-center">
               <i className="fa fa-solid fa0facebook" />
 
               <a
@@ -80,7 +90,7 @@ export default function Footer() {
               <i className="fa fa-solid fa0facebook" />
 
               <span>123 Reminder Lane, Memory City, RC 12345</span>
-            </li>
+            </li> */}
           </ul>
         </div>
       </div>

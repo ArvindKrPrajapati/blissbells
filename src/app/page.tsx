@@ -1,9 +1,9 @@
-import { Pacifico } from "next/font/google";
+import { Sansita } from "next/font/google";
 import LandingImageCarousel from "@/components/Carousel/LandingImageCarousel";
 import LandingCTA from "@/components/LandingCTA";
 import Container from "@/components/Container";
 import Footer from "@/components/Footer/Footer";
-const font = Pacifico({ weight: "400", subsets: ["cyrillic"] });
+const font = Sansita({ weight: "400", subsets: ["latin"] });
 
 const images = [
   {
@@ -38,17 +38,19 @@ export default function Home() {
             <h1
               className={`${font.className} text-color font-semibold md:text-5xl md:leading-[1.2em] text-5xl leading-[1.2em]`}
             >
-              <span className="ml-2 bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent">
                 {"Let life’s best moments ring loud."}
               </span>
             </h1>
             <h2 className="py-8">
-              <p className="md:text-xl text-lg mb-8 animate-fade-in-up bg-gradient-to-r from-zinc-950 to-zinc-900 bg-clip-text text-transparent font-semibold">
+              <p className="md:text-xl text-lg mb-8 animate-fade-in-up bg-gradient-to-r from-zinc-950 to-zinc-900 bg-clip-text text-transparent font-semibold  text-center md:text-left">
                 BlissBells keeps your celebrations close, ensuring no special
                 day is ever forgotten.
               </p>
             </h2>
-            <LandingCTA />
+            <div className="flex justify-center md:justify-start">
+              <LandingCTA />
+            </div>
           </div>
         </div>
         <div className="w-[55%] overflow-hidden hidden md:block">
@@ -62,11 +64,11 @@ export default function Home() {
       </div>
 
       {/* features */}
-      <Container className="md:py-16 pt-8 px-4">
-        <h2 className="text-3xl font-semibold text-center mb-4 bg-gradient-to-r from-red-500 to-red-800 bg-clip-text text-transparent animate-fade-in">
+      <Container className="py-16 pt-8 px-4">
+        <h2 className="text-2xl font-semibold text-center py-6 bg-gradient-to-r from-red-500 to-red-800 bg-clip-text text-transparent animate-fade-in">
           Why Choose BlissBells?
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-4">
           <FeatureCard
             icon={"fa-solid fa-calendar"}
             title="Never Forget"
