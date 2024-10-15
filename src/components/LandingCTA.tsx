@@ -3,6 +3,7 @@ import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 import ButtonContainer from "./ButtonContainer";
 import { getAuthCookie } from "@/lib/apiCalls";
+import ClientOnly from "./ClientOnly";
 
 export default function LandingCTA({ className }: { className?: string }) {
   const router = useRouter();
@@ -12,8 +13,17 @@ export default function LandingCTA({ className }: { className?: string }) {
     router.push(auth ? "/blissbells" : `${pathname}?auth=true`);
   };
   return (
-    <ButtonContainer className={className} onClick={handleClick}>
-      {auth ? "Create Blissbells" : "Start Remembering"}
-    </ButtonContainer>
+    <ClientOnly>
+      <ButtonContainer className={className} onClick={handleClick}>
+        {auth ? (
+          <p className="flex h-full items-center gap-3">
+            <i className="fa-solid fa-calendar"></i>
+            Create Blissbells
+          </p>
+        ) : (
+          "Start Remembering"
+        )}
+      </ButtonContainer>
+    </ClientOnly>
   );
 }

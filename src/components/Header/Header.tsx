@@ -21,7 +21,7 @@ import LandingCTA from "../LandingCTA";
 
 export default function Header() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div></div>}>
       <HeaderComponent />
     </Suspense>
   );
@@ -107,7 +107,7 @@ function HeaderComponent() {
       </div>
 
       <div className="flex items-center gap-5">
-        {revealHeader ? (
+        {revealHeader || pathname != "/" ? (
           <div className="hidden md:flex gap-5">
             {routes.map((item, index) => (
               <Link
@@ -151,7 +151,7 @@ function HeaderComponent() {
           </ClientOnly>
         </section>
         {/* menu ends */}
-        {revealHeader ? (
+        {revealHeader || pathname != "/" ? (
           <ClientOnly>
             {!auth ? (
               <>
@@ -164,7 +164,7 @@ function HeaderComponent() {
                   width={1000}
                   height={1000}
                   src={auth.user.dp || "/images/user.png"}
-                  className="ml-2 mt-1 w-[30px] aspect-square rounded-full"
+                  className="ml-2 mt-1 w-[25px] aspect-square rounded-full"
                 />
               </div>
             )}
