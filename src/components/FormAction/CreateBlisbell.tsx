@@ -5,6 +5,7 @@ import ButtonContainer from "../ButtonContainer";
 import toast from "react-hot-toast";
 import { apiPost } from "@/lib/apiCalls";
 import { useRouter } from "next/navigation";
+import { Input } from "@nextui-org/react";
 
 export default function CreateBlisbell() {
   const [eventType, setEventType] = useState("");
@@ -61,7 +62,7 @@ export default function CreateBlisbell() {
               setEventType(e.target.value);
               setOtherEventName("");
             }}
-            className="w-full md:flex-1 px-4 py-2 pr-8 rounded border border-red-200 focus:outline-none focus:ring-1 focus:ring-red-300 appearance-none bg-white bg-no-repeat bg-right"
+            className="w-full md:flex-1 px-4 py-2 pr-8 rounded border border-red-200 focus:outline-none focus:ring-1 focus:ring-red-300 appearance-none bg-white bg-no-repeat bg-right text-sm"
             style={{
               backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23ef4444'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
               backgroundSize: "1.5em 1.5em",
@@ -90,12 +91,21 @@ export default function CreateBlisbell() {
               required
             />
           )}
-          <input
+          {/* <input
             type="date"
             className="w-full md:flex-1 px-4 py-2 rounded border border-red-200 focus:outline-none focus:ring-1 focus:ring-red-300"
             required
             value={date}
             onChange={(e) => setDate(e.target.value)}
+          /> */}
+          <Input
+            type="date"
+            required={true}
+            value={date}
+            radius="none"
+            color="danger"
+            onChange={(e) => setDate(e.target.value)}
+            className="w-full md:flex-1 rounded border border-red-200 focus:outline-none focus:ring-1 focus:ring-red-300 bg-white"
           />
         </div>
         <div className="flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0 items-start">
