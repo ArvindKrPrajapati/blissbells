@@ -11,8 +11,19 @@ export default function CreateBlisbell() {
   const [otherEventName, setOtherEventName] = useState("");
   const [date, setDate] = useState("");
   const [actionLoading, setActionLoading] = useState(false);
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [notification, setNotification] = useState(true);
   const router = useRouter();
 
+  const clearState = () => {
+    setEventType("");
+    setOtherEventName("");
+    setDate("");
+    setName("");
+    setDescription("");
+    setNotification(true);
+  };
   const handleSubmit = async (e: any) => {
     try {
       e.preventDefault();
@@ -20,10 +31,11 @@ export default function CreateBlisbell() {
       const res = await apiPost(`/blissbells`, {
         date,
         event: otherEventName || eventType,
+        name,
+        description,
+        notification,
       });
-      setEventType("");
-      setOtherEventName("");
-      setDate("");
+      clearState();
       router.refresh();
       toast.success("Blissbell Added");
     } catch (error: any) {
@@ -85,6 +97,41 @@ export default function CreateBlisbell() {
             value={date}
             onChange={(e) => setDate(e.target.value)}
           />
+        </div>
+        <div className="flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0 items-start">
+          <div className="md:w-1/2 w-full">
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Special Person Name"
+              className="w-full md:flex-1 px-4 py-2 rounded border border-red-200 focus:outline-none focus:ring-1 focus:ring-red-300"
+              required
+            />
+          </div>
+
+          <textarea
+            className="w-full md:flex-1 px-4 py-2 rounded border border-red-200 focus:outline-none focus:ring-1 focus:ring-red-300 resize-none"
+            placeholder="Description (Optional)"
+            value={description}
+            onChange={(e) =>
+              e.target.value.length > 200
+                ? null
+                : setDescription(e.target.value)
+            }
+          />
+        </div>
+        <div className="flex items-center py-1">
+          <input
+            type="checkbox"
+            id="notification"
+            checked={notification}
+            onChange={(e) => setNotification(e.target.checked)}
+            className="mr-3"
+          />
+          <label htmlFor="notification" className="text-sm">
+            Send Reminder on Whatsapp
+          </label>
         </div>
         <ButtonContainer
           className="rounded-md w-full text-sm"
