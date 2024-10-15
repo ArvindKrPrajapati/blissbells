@@ -91,13 +91,6 @@ export default function CreateBlisbell() {
               required
             />
           )}
-          {/* <input
-            type="date"
-            className="w-full md:flex-1 px-4 py-2 rounded border border-red-200 focus:outline-none focus:ring-1 focus:ring-red-300"
-            required
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-          /> */}
           <Input
             type="date"
             required={true}
@@ -105,6 +98,7 @@ export default function CreateBlisbell() {
             radius="none"
             color="danger"
             onChange={(e) => setDate(e.target.value)}
+            placeholder="dd/mm/yyyy"
             className="w-full md:flex-1 rounded border border-red-200 focus:outline-none focus:ring-1 focus:ring-red-300 bg-white"
           />
         </div>
