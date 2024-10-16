@@ -28,7 +28,6 @@ export default function ListBlissBells() {
   const [data, setData] = useState([]);
   const [skip, setSkip] = useState(0);
   const [limit, setLimit] = useState(5);
-  // trigger deploy
   const [total, setTotal] = useState(0);
   const url = `/blissbells?$sort[date]=1&$limit=${limit}`;
 
@@ -38,7 +37,7 @@ export default function ListBlissBells() {
     try {
       setActionLoading(true);
       const res = await apiDelete(`/blissbells/${selectedItem?.id}`);
-      router.refresh();
+      _init(1);
       setSelectedItem(null);
       onClose();
       toast.success("Deleted Successfully");
