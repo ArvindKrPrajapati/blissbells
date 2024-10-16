@@ -27,7 +27,7 @@ export default function ListBlissBells() {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [skip, setSkip] = useState(0);
-  const [limit, setLimit] = useState(7);
+  const [limit, setLimit] = useState(5);
   const [total, setTotal] = useState(0);
   const url = `/blissbells?$sort[date]=1&$limit=${limit}`;
 
