@@ -59,7 +59,7 @@ export default function Login({ closeModal }: props) {
         document.cookie = `auth=${JSON.stringify(
           res
         )}; expires=${expirationDate.toUTCString()}; path=/`;
-
+        closeModal();
         router.replace("/blissbells");
         toast.success("Login Successfully");
       } else {
