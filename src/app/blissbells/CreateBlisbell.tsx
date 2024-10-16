@@ -1,13 +1,16 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Accordion from "../Accordian/Accordian";
-import ButtonContainer from "../ButtonContainer";
+import Accordion from "../../components/Accordian/Accordian";
+import ButtonContainer from "../../components/ButtonContainer";
 import toast from "react-hot-toast";
 import { apiPost } from "@/lib/apiCalls";
 import { useRouter } from "next/navigation";
 import { Input } from "@nextui-org/react";
 
-export default function CreateBlisbell() {
+type props = {
+  refresh: (page: number) => void;
+};
+export default function CreateBlisbell({ refresh = (page) => {} }: props) {
   const [eventType, setEventType] = useState("");
   const [otherEventName, setOtherEventName] = useState("");
   const [date, setDate] = useState("");
@@ -37,7 +40,7 @@ export default function CreateBlisbell() {
         notification,
       });
       clearState();
-      router.refresh();
+      refresh(1);
       toast.success("Blissbell Added");
     } catch (error: any) {
       toast.error(error.message);
