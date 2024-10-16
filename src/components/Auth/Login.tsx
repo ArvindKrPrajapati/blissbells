@@ -60,7 +60,6 @@ export default function Login({ closeModal }: props) {
           res
         )}; expires=${expirationDate.toUTCString()}; path=/`;
 
-        router.refresh();
         router.replace("/blissbells");
         toast.success("Login Successfully");
       } else {
