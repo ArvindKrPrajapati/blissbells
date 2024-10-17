@@ -19,6 +19,10 @@ export default function Login({ closeModal }: props) {
   const [isValidEmail, setIsValidEmail] = useState(false);
   const [isValidPassword, setIsValidPassword] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [createAccount, setCreateAccount] = useState(false);
+  const [name, setName] = useState("");
+  const [optSent, setOptSent] = useState(false);
+  const [otp, setOtp] = useState("");
 
   const pathname = usePathname();
 
@@ -42,14 +46,63 @@ export default function Login({ closeModal }: props) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!isValidEmail || !isValidPassword) {
+    if (
+      createAccount
+        ? !isValidEmail || !isValidPassword || !name
+        : !isValidEmail || !isValidPassword
+    ) {
       return;
     }
     try {
       setLoading(true);
+      if (createAccount) {
+        const res = await apiPost("/users", {
+          name,
+          email,
+          password,
+        });
+        if (res) {
+          setOptSent(true);
+          setOtp("");
+          toast.success(res.message);
+        } else {
+          toast.error("Something went wrong");
+        }
+      } else {
+        const res = await apiPost("/authentication", {
+          email,
+          password,
+          strategy: "local",
+        });
+        if (res.accessToken) {
+          const expirationDate = new Date();
+          expirationDate.setDate(expirationDate.getDate() + 100000);
+          // Use document.cookie to set the cookie
+          document.cookie = `auth=${JSON.stringify(
+            res
+          )}; expires=${expirationDate.toUTCString()}; path=/`;
+          closeModal();
+          router.replace("/blissbells");
+          toast.success("Login Successfully");
+        } else {
+          toast.error(res.error);
+        }
+      }
+    } catch (error: any) {
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleOtpVerification = async (e: any) => {
+    try {
+      e.preventDefault();
+
+      setLoading(true);
       const res = await apiPost("/authentication", {
         email,
-        password,
+        otp,
         strategy: "local",
       });
       if (res.accessToken) {
@@ -63,11 +116,11 @@ export default function Login({ closeModal }: props) {
         router.replace("/blissbells");
         toast.success("Login Successfully");
       } else {
-        setLoading(false);
         toast.error(res.error);
       }
     } catch (error: any) {
       toast.error(error.message);
+    } finally {
       setLoading(false);
     }
   };
@@ -77,64 +130,157 @@ export default function Login({ closeModal }: props) {
       <div className="flex justify-center items-center pt-3 -ml-3">
         <Image src={"/images/logo.png"} alt="logo" width={150} height={70} />
       </div>
-      <p className="text-sm text-center text-zinc-900 py-3">
-        Login to continue
-      </p>
-      <form
-        className="md:p-5 py-5 px-2 flex flex-col gap-5"
-        onSubmit={handleSubmit}
-      >
-        <Input
-          value={email}
-          type="email"
-          label="Email"
-          variant="bordered"
-          isInvalid={!isValidEmail && email.length > 0}
-          // color={!isValidEmail && email.length > 0 ? "danger" : "success"}
-          errorMessage={
-            !isValidEmail && email.length > 0 && "Please enter a valid email"
-          }
-          onValueChange={validateEmail}
-          radius="sm"
-          className="active:border-zinc-700"
-          style={{ fontSize: "16px" }}
-        />
-        <Input
-          label="Password"
-          variant="bordered"
-          isInvalid={!isValidPassword && password.length > 0}
-          onValueChange={validatePassword}
-          errorMessage={
-            !isValidPassword && password.length > 0 && "Password is too short"
-          }
-          endContent={
-            <button
-              className="focus:outline-none"
-              type="button"
-              onClick={toggleVisibility}
+
+      {optSent ? (
+        <>
+          <p className="text-sm text-center text-zinc-900 py-3">
+            OTP sent to <span className="text-blue-500">{email}</span>
+          </p>
+          <form
+            className="md:p-5 py-5 px-2 flex flex-col gap-3"
+            onSubmit={handleOtpVerification}
+          >
+            <Input
+              value={otp}
+              type="text"
+              label="Enter OTP"
+              variant="bordered"
+              isInvalid={otp && otp.length <= 5 ? true : false}
+              // color={!isValidEmail && email.length > 0 ? "danger" : "success"}
+              errorMessage={
+                otp && otp.length <= 5 && "Please enter a valid OTP"
+              }
+              onValueChange={(e) => setOtp(e)}
+              radius="sm"
+              className="active:border-zinc-700"
+              style={{ fontSize: "16px" }}
+              isRequired={true}
+              maxLength={6}
+            />
+            <div className="text-end">
+              <p
+                className="text-blue-500 font-semibold m-0 text-sm cursor-pointer"
+                onClick={() => {
+                  setOptSent(false);
+                  setOtp("");
+                }}
+              >
+                Wrong email?
+              </p>
+            </div>
+            <ButtonContainer
+              type="submit"
+              isLoading={loading}
+              isDisabled={otp.length <= 5}
             >
-              {showPassword ? (
-                <i className="fa-solid fa-eye-slash text-2xl text-default-400 pointer-events-none"></i>
-              ) : (
-                <i className="fa-solid fa-eye text-2xl text-default-400 pointer-events-none"></i>
-              )}
-            </button>
-          }
-          type={showPassword ? "text" : "password"}
-          radius="sm"
-          className="active:border-zinc-700"
-          style={{ fontSize: "16px" }}
-        />
-        <ButtonContainer
-          type="submit"
-          isLoading={loading}
-          isDisabled={!isValidEmail || !isValidPassword}
-        >
-          Login
-        </ButtonContainer>
-        <p className="font-semibold text-center">or</p>
-        <GoogleSignIn closeModal={closeModal} />
-      </form>
+              Verify OTP
+            </ButtonContainer>
+            <br />
+            <br />
+          </form>
+        </>
+      ) : (
+        <>
+          <p className="text-sm text-center text-zinc-900 py-3">
+            {createAccount ? "Create New Account" : " Login to continue"}
+          </p>
+          <form
+            className="md:p-5 py-5 px-2 flex flex-col gap-5"
+            onSubmit={handleSubmit}
+          >
+            {createAccount ? (
+              <Input
+                value={name}
+                type="text"
+                label="Full Name"
+                variant="bordered"
+                isInvalid={name && name.length < 5 ? true : false}
+                // color={!isValidEmail && email.length > 0 ? "danger" : "success"}
+                errorMessage={
+                  name && name.length > 5 && "Please enter a valid name"
+                }
+                onValueChange={(e) => setName(e)}
+                radius="sm"
+                className="active:border-zinc-700"
+                style={{ fontSize: "16px" }}
+                isRequired={true}
+              />
+            ) : null}
+            <Input
+              value={email}
+              type="email"
+              label="Email"
+              variant="bordered"
+              isInvalid={!isValidEmail && email.length > 0}
+              // color={!isValidEmail && email.length > 0 ? "danger" : "success"}
+              errorMessage={
+                !isValidEmail &&
+                email.length > 0 &&
+                "Please enter a valid email"
+              }
+              onValueChange={validateEmail}
+              radius="sm"
+              className="active:border-zinc-700"
+              style={{ fontSize: "16px" }}
+            />
+            <Input
+              value={password}
+              label="Password"
+              variant="bordered"
+              isInvalid={!isValidPassword && password.length > 0}
+              onValueChange={validatePassword}
+              errorMessage={
+                !isValidPassword &&
+                password.length > 0 &&
+                "Password is too short"
+              }
+              endContent={
+                <button
+                  className="focus:outline-none"
+                  type="button"
+                  onClick={toggleVisibility}
+                >
+                  {showPassword ? (
+                    <i className="fa-solid fa-eye-slash text-2xl text-default-400 pointer-events-none"></i>
+                  ) : (
+                    <i className="fa-solid fa-eye text-2xl text-default-400 pointer-events-none"></i>
+                  )}
+                </button>
+              }
+              type={showPassword ? "text" : "password"}
+              radius="sm"
+              className="active:border-zinc-700"
+              style={{ fontSize: "16px" }}
+            />
+
+            <ButtonContainer
+              type="submit"
+              isLoading={loading}
+              isDisabled={
+                createAccount
+                  ? !isValidEmail || !isValidPassword || name.length < 5
+                  : !isValidEmail || !isValidPassword
+              }
+            >
+              {createAccount ? "Register" : " Login"}
+            </ButtonContainer>
+            <div className="text-center">
+              <p
+                onClick={() => {
+                  setCreateAccount(!createAccount);
+                }}
+                className="text-sm text-blue-600 cursor-pointer hover:text-blue-700 font-semibold duration-300 transition-all"
+              >
+                {createAccount
+                  ? "Already Have Account? Login"
+                  : "Create New Account"}
+              </p>
+            </div>
+            <p className="font-semibold text-center">or</p>
+            <GoogleSignIn closeModal={closeModal} />
+          </form>
+        </>
+      )}
     </div>
   );
 }
