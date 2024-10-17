@@ -24,6 +24,15 @@ export default function Login({ closeModal }: props) {
   const [optSent, setOptSent] = useState(false);
   const [otp, setOtp] = useState("");
 
+  const [otpTimer, setOtpTimer] = useState(120);
+
+  const countDownTimer = () => {
+    setOtpTimer(120);
+    const interval = setInterval(() => {
+      setOtpTimer(otpTimer - 1);
+    }, 1000);
+  };
+
   const pathname = usePathname();
 
   const toggleVisibility = () => setShowPassword(!showPassword);
@@ -45,7 +54,7 @@ export default function Login({ closeModal }: props) {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+    e?.preventDefault();
     if (
       createAccount
         ? !isValidEmail || !isValidPassword || !name
@@ -64,6 +73,7 @@ export default function Login({ closeModal }: props) {
         if (res) {
           setOptSent(true);
           setOtp("");
+          // countDownTimer();
           toast.success(res.message);
         } else {
           toast.error("Something went wrong");
@@ -157,7 +167,17 @@ export default function Login({ closeModal }: props) {
               isRequired={true}
               maxLength={6}
             />
-            <div className="text-end">
+            <div className="flex justify-between">
+              <p
+                className={`text-blue-500 font-semibold m-0 text-sm cursor-pointer ${otpTimer == 0 ? "opacity-100" : "opacity-70"}`}
+                onClick={(e) => {
+                  if (otpTimer == 0) {
+                    handleSubmit(e);
+                  }
+                }}
+              >
+                Resend in {otpTimer}s
+              </p>
               <p
                 className="text-blue-500 font-semibold m-0 text-sm cursor-pointer"
                 onClick={() => {
@@ -171,6 +191,7 @@ export default function Login({ closeModal }: props) {
             <ButtonContainer
               type="submit"
               isLoading={loading}
+              className="mt-3"
               isDisabled={otp.length <= 5}
             >
               Verify OTP
