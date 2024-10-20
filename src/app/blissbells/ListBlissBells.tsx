@@ -41,7 +41,9 @@ export default function ListBlissBells() {
 
       {data.length ? (
         <h2 className="my-3 mt-5 font-semibold my-text">Upcoming Blissbells</h2>
-      ) : null}
+      ) : (
+        <div className="mt-5" />
+      )}
       <ListItem data={data} loading={loading} refresh={_init} />
       <br />
       <br />
