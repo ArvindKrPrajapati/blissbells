@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Accordion from "../../components/Accordian/Accordian";
 import ButtonContainer from "../../components/ButtonContainer";
 import toast from "react-hot-toast";
