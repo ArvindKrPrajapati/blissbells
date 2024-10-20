@@ -39,7 +39,9 @@ export default function ListBlissBells() {
       <CreateBlisbell refresh={_init} />
       <TodaysBlissbells loading={loading} />
 
-      <h2 className="my-3 mt-5 font-semibold my-text">Upcoming Blissbells</h2>
+      {data.length ? (
+        <h2 className="my-3 mt-5 font-semibold my-text">Upcoming Blissbells</h2>
+      ) : null}
       <ListItem data={data} loading={loading} refresh={_init} />
       <br />
       <br />
