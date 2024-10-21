@@ -5,7 +5,13 @@ import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import ListItem from "./ListItem";
 
-export default function TodaysBlissbells({ loading }: { loading: boolean }) {
+export default function TodaysBlissbells({
+  loading,
+  setNoDataFound = () => {},
+}: {
+  loading: boolean;
+  setNoDataFound?: (state: boolean) => void;
+}) {
   const [data, setData] = useState([]);
 
   const getTodayBlissbells = async (page?: number) => {
@@ -13,6 +19,8 @@ export default function TodaysBlissbells({ loading }: { loading: boolean }) {
       const res = await apiGet(
         `/blissbells?$limit=500&date=${indianDate().format("YYYY-MM-DD")}`
       );
+      setNoDataFound(res.data.length === 0);
+
       setData(res.data);
     } catch (error: any) {
       toast.error(error.message);
