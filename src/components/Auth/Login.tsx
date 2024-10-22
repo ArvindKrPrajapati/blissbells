@@ -3,8 +3,8 @@
 import { apiPost } from "@/lib/apiCalls";
 import { Button, Input } from "@nextui-org/react";
 import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
-import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import ButtonContainer from "../ButtonContainer";
 import GoogleSignIn from "./GoogleSignIn";
@@ -12,6 +12,7 @@ import GoogleSignIn from "./GoogleSignIn";
 type props = {
   closeModal: () => void;
 };
+const TIMER = 120;
 export default function Login({ closeModal }: props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,16 +25,8 @@ export default function Login({ closeModal }: props) {
   const [optSent, setOptSent] = useState(false);
   const [otp, setOtp] = useState("");
 
-  const [otpTimer, setOtpTimer] = useState(120);
-
-  const countDownTimer = () => {
-    setOtpTimer(120);
-    const interval = setInterval(() => {
-      setOtpTimer(otpTimer - 1);
-    }, 1000);
-  };
-
-  const pathname = usePathname();
+  const [otpTimer, setOtpTimer] = useState(TIMER);
+  const [startTimer, setStartTimer] = useState(false);
 
   const toggleVisibility = () => setShowPassword(!showPassword);
 
@@ -72,8 +65,8 @@ export default function Login({ closeModal }: props) {
         });
         if (res) {
           setOptSent(true);
+          setStartTimer(true);
           setOtp("");
-          // countDownTimer();
           toast.success(res.message);
         } else {
           toast.error("Something went wrong");
@@ -135,6 +128,46 @@ export default function Login({ closeModal }: props) {
     }
   };
 
+  const resendOtp = async () => {
+    if (startTimer || loading) {
+      return;
+    }
+    try {
+      setLoading(true);
+      const res = await apiPost("/send-otp", { email }, false);
+      if (res) {
+        setStartTimer(true);
+        toast.success(res.message);
+      } else {
+        toast.error("Something went wrong");
+      }
+    } catch (error: any) {
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    if (startTimer) {
+      let i = TIMER;
+      const interval = setInterval(() => {
+        setOtpTimer((t) => t - 1);
+        i--;
+
+        if (i == 0) {
+          setStartTimer(false);
+          clearInterval(interval);
+        }
+      }, 1000);
+
+      return () => {
+        setStartTimer(false);
+        setOtpTimer(TIMER);
+        clearInterval(interval);
+      };
+    }
+  }, [startTimer]);
+
   return (
     <div className="pt-8">
       <div className="flex justify-center items-center pt-3 -ml-3">
@@ -169,19 +202,18 @@ export default function Login({ closeModal }: props) {
             />
             <div className="flex justify-between">
               <p
-                className={`text-blue-500 font-semibold m-0 text-sm cursor-pointer ${otpTimer == 0 ? "opacity-100" : "opacity-70"}`}
+                className={`text-blue-500 font-semibold m-0 text-sm cursor-pointer ${!startTimer && !loading ? "opacity-100" : "opacity-70"}`}
                 onClick={(e) => {
-                  if (otpTimer == 0) {
-                    handleSubmit(e);
-                  }
+                  resendOtp();
                 }}
               >
-                Resend in {otpTimer}s
+                Resend {startTimer ? `in ${otpTimer}s` : null}
               </p>
               <p
                 className="text-blue-500 font-semibold m-0 text-sm cursor-pointer"
                 onClick={() => {
                   setOptSent(false);
+                  setStartTimer(false);
                   setOtp("");
                 }}
               >
