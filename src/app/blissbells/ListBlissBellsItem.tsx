@@ -59,18 +59,29 @@ export default function ListItem({
             startContent={
               <Avatar
                 isBordered
-                className="bg-white"
+                className="bg-white mr-3"
                 radius="lg"
-                src="/images/user.png"
+                color={item.image ? "danger" : "default"}
+                src={item.image || "/images/user.png"}
               />
             }
             subtitle={
-              <p>
-                {item.name} on{" "}
-                <span>{indianDate(item.date).format("DD MMM YYYY")}</span>
+              <div className="flex items-center gap-2 text-sm">
+                <div className="flex items-center gap-2 rounded-md p-[3px] px-3 bg-pink-100 border-1 border-pink-500 text-black text-xs">
+                  <i className="fa-regular fa-calendar text-xs" />
+                  <div>{indianDate(item.date).format("DD MMM YYYY")}</div>
+                </div>
+                <div className="bg-gradient-to-r rounded-md p-1 px-3 text-xs capitalize text-white from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 flex items-center gap-2">
+                  <i className="fa-regular fa-star" />
+                  <div>{item.event}</div>
+                </div>
+              </div>
+            }
+            title={
+              <p className="capitalize font-semibold text-[1.12rem] leading-[2rem]">
+                {item.name}
               </p>
             }
-            title={<p className="capitalize font-semibold">{item.event}</p>}
           >
             <p className="font-semibold text-sm">Description</p>
             {item.description || "No Description"}
