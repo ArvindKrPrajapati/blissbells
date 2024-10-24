@@ -106,7 +106,7 @@ export default function CreateBlisbell({ refresh = (page) => {} }: props) {
           />
         </div>
         <div className="flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0 items-start">
-          <div className="md:w-1/2 w-full">
+          <div className="md:w-[52%] w-full flex gap-2">
             <input
               type="text"
               value={name}
@@ -137,7 +137,7 @@ export default function CreateBlisbell({ refresh = (page) => {} }: props) {
             className="mr-3"
           />
           <label htmlFor="notification" className="text-sm">
-            Send Reminder on Whatsapp
+            Send Reminder on Email
           </label>
         </div>
         <ButtonContainer
