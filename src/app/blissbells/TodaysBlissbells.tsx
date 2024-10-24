@@ -3,7 +3,7 @@ import { apiGet } from "@/lib/apiCalls";
 import { indianDate } from "@/lib/common";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import ListItem from "./ListItem";
+import ListItem from "./ListBlissBellsItem";
 
 export default function TodaysBlissbells({
   loading,

@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { apiGet } from "@/lib/apiCalls";
 import PageNavigation from "@/components/PageNavigation";
 import CreateBlisbell from "@/app/blissbells/CreateBlisbell";
-import ListItem from "./ListItem";
+import ListItem from "./ListBlissBellsItem";
 import { indianDate } from "@/lib/common";
 import Link from "next/link";
 import Image from "next/image";
