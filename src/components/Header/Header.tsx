@@ -106,7 +106,7 @@ function HeaderComponent() {
         </Link>
       </div>
 
-      <div className="flex items-center gap-5">
+      <div className="flex items-center md:gap-5 gap-2">
         {revealHeader || pathname != "/" ? (
           <div className="hidden md:flex gap-5">
             {routes.map((item, index) => (
@@ -171,7 +171,11 @@ function HeaderComponent() {
           </ClientOnly>
         ) : null}
         <Button
-          startContent={<i className="fa-solid fa-bars"></i>}
+          startContent={
+            <i
+              className={`fa-solid fa-${isMenuOpen ? "close" : "bars"} transition-all duration-300 text-[1.123rem]`}
+            ></i>
+          }
           className={`bg-inherit md:hidden`}
           isIconOnly={true}
           onClick={() => setIsMenuOpen(!isMenuOpen)}
