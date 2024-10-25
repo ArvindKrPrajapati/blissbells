@@ -51,7 +51,7 @@ export default function ListItem({
   }
   return (
     <>
-      <Accordion>
+      <Accordion className="animate-[appearance-in_400ms]">
         {data.map((item: any, index: number) => (
           <AccordionItem
             key={index}

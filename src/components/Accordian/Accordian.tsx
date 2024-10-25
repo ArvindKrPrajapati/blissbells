@@ -3,8 +3,9 @@ import React, { useEffect, useRef, useState } from "react";
 type props = {
   title: React.ReactNode;
   children: React.ReactNode;
+  className?: string;
 };
-export default function Accordion({ title, children }: props) {
+export default function Accordion({ title, children, className }: props) {
   const [isOpen, setIsOpen] = useState(false);
   const contentRef = useRef<any>(null);
 
@@ -16,7 +17,9 @@ export default function Accordion({ title, children }: props) {
     }
   }, [isOpen]);
   return (
-    <div className="border border-red-200 rounded-md overflow-hidden">
+    <div
+      className={`border border-red-200 rounded-md overflow-hidden ${className}`}
+    >
       <button
         className="w-full p-4 text-left bg-red-50 hover:bg-red-100 transition-colors duration-300 flex justify-between items-center"
         onClick={() => setIsOpen(!isOpen)}

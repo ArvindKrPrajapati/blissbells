@@ -48,7 +48,7 @@ export default function ListBlissBells({ past = false }: { past?: boolean }) {
       )}
 
       {!loading && (!noDataFound || data.length != 0) ? (
-        <p className="text-end mt-2">
+        <p className="text-end mt-2 animate-[appearance-in_400ms]">
           <Link href={`/blissbells${past ? "" : "/past"}`} className="my-text">
             {past ? null : <i className="fa-solid fa-history text-sm" />}
             <span> View {past ? "Upcoming" : "Past"} Blissbells</span>
@@ -57,7 +57,7 @@ export default function ListBlissBells({ past = false }: { past?: boolean }) {
       ) : null}
 
       {data.length ? (
-        <h2 className="my-3 mt-5 font-semibold my-text">
+        <h2 className="my-3 mt-5 font-semibold my-text animate-[appearance-in_400ms]">
           {past ? (
             <Link href={"/blissbells"} className="mr-3">
               <i className="fa-solid fa-chevron-left text-sm"></i>

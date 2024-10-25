@@ -36,7 +36,7 @@ export default function TodaysBlissbells({
   }
 
   return (
-    <div className="my-3 mt-5 rounded-md overflow-hidden bg-white shadow-md">
+    <div className="my-3 mt-5 rounded-md overflow-hidden bg-white shadow-md animate-[appearance-in_400ms]">
       <div className="flex">
         <div className="flex w-[100px] min-h-[105px] items-center justify-center bg-red-900">
           <i className="fa-solid fa-bell text-2xl text-red-500" />

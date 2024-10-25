@@ -92,6 +92,7 @@ export default function CreateBlisbell({ refresh = (page) => {} }: Props) {
           <span className="font-bold text-red-500 ml-4">Create BlissBell</span>
         </div>
       }
+      className="animate-[appearance-in_200ms]"
     >
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0">
