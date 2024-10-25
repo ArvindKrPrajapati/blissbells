@@ -9,7 +9,6 @@ import UserDetailsCard from "./UserDetailsCard";
 export default async function ProfilePage() {
   const auth = getServerCookies();
   const data = await apiGet(`/users/${auth?.user?.id}`, auth);
-  console.log(data);
   return (
     <Container className="p-3">
       <UserDetailsCard data={data} />

@@ -31,7 +31,7 @@ export default function MobileNumber({ data }: { data: any }) {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-5 w-full mx-auto">
+    <div className="bg-white rounded-lg shadow-md p-5 w-full mx-auto animate-[appearance-in_800ms]">
       <div className="flex items-center justify-between">
         <div className="flex gap-3 items-center w-full me-2">
           <i className="fa-brands fa-whatsapp text-xl text-green-600 mt-1" />

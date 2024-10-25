@@ -14,7 +14,7 @@ export default function LogoutButton() {
   return (
     <ButtonContainer
       onClick={handleLogout}
-      className="w-full rounded-md text-sm"
+      className="w-full rounded-md text-sm animate-[appearance-in_1200ms]"
     >
       Logout
     </ButtonContainer>
