@@ -12,11 +12,13 @@ export default function LogoutButton() {
     toast.success("Logged out successfully");
   };
   return (
-    <ButtonContainer
-      onClick={handleLogout}
-      className="w-full rounded-md text-sm animate-[appearance-in_1200ms]"
-    >
-      Logout
-    </ButtonContainer>
+    <div className="animate-[appearance-in_1200ms]">
+      <ButtonContainer
+        onClick={handleLogout}
+        className="w-full rounded-md text-sm"
+      >
+        Logout
+      </ButtonContainer>
+    </div>
   );
 }

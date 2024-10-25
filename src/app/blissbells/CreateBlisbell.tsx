@@ -5,7 +5,6 @@ import ButtonContainer from "../../components/ButtonContainer";
 import toast from "react-hot-toast";
 import { apiPost, uploadFileWithData } from "@/lib/apiCalls";
 import { Input } from "@nextui-org/react";
-import "react-image-crop/dist/ReactCrop.css";
 import ImageCropper from "@/components/ImageCropper";
 
 type Props = {
@@ -21,8 +20,6 @@ export default function CreateBlisbell({ refresh = (page) => {} }: Props) {
   const [description, setDescription] = useState("");
   const [notification, setNotification] = useState(true);
   const [imagePreview, setImagePreview] = useState<string>("/images/user.png");
-  const [showCropper, setShowCropper] = useState(false);
-  const [tempImage, setTempImage] = useState<string>("");
   const [imageFile, setImageFile] = useState<File | null>(null);
 
   const clearState = () => {
@@ -36,25 +33,10 @@ export default function CreateBlisbell({ refresh = (page) => {} }: Props) {
     setImageFile(null);
   };
 
-  const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        if (e.target?.result) {
-          setTempImage(e.target.result as string);
-          setShowCropper(true);
-        }
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
   const handleCrop = (blob: Blob) => {
     const url = URL.createObjectURL(blob);
     setImagePreview(url);
     setImageFile(new File([blob], "cropped-image.jpg", { type: "image/jpeg" }));
-    setShowCropper(false);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -144,23 +126,13 @@ export default function CreateBlisbell({ refresh = (page) => {} }: Props) {
         </div>
         <div className="flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0 items-start">
           <div className="md:w-[52%] w-full flex gap-2">
-            <input
-              type="file"
-              id="imageInput"
-              accept="image/*"
-              className="hidden"
-              onClick={(e: any) => {
-                e.target.value = null;
-              }}
-              onChange={handleImageSelect}
-            />
-            <img
-              src={imagePreview}
-              alt="User"
-              className="w-12 h-12 rounded-full cursor-pointer border border-red-200 object-cover"
-              onClick={() => document.getElementById("imageInput")?.click()}
-            />
-
+            <ImageCropper onCrop={handleCrop}>
+              <img
+                src={imagePreview}
+                alt="User"
+                className="w-12 h-12 rounded-full cursor-pointer border border-red-200 object-cover"
+              />
+            </ImageCropper>
             <input
               type="text"
               value={name}
@@ -202,17 +174,6 @@ export default function CreateBlisbell({ refresh = (page) => {} }: Props) {
           Set Blissbell
         </ButtonContainer>
       </form>
-
-      {showCropper && tempImage && (
-        <ImageCropper
-          src={tempImage}
-          onCrop={handleCrop}
-          onCancel={() => {
-            setShowCropper(false);
-            setTempImage("");
-          }}
-        />
-      )}
     </Accordion>
   );
 }

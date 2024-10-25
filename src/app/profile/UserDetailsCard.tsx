@@ -2,8 +2,9 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import { Button } from "@nextui-org/react";
-import { apiPatch } from "@/lib/apiCalls";
+import { apiPatch, uploadFileWithData } from "@/lib/apiCalls";
 import toast from "react-hot-toast";
+import ImageCropper from "@/components/ImageCropper";
 
 export default function UserDetailsCard({ data }: { data: any }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -31,18 +32,51 @@ export default function UserDetailsCard({ data }: { data: any }) {
     }
   };
 
+  const handleImageUpload = async (blob: Blob) => {
+    try {
+      setActionLoading(true);
+      const file = new File(
+        [blob],
+        `${data?.name?.toLowerCase()?.replaceAll(" ", "-")}-${Date.now()}.jpg`,
+        {
+          type: "image/jpeg",
+        }
+      );
+
+      const res = await uploadFileWithData(
+        `/users/${data.id}`,
+        file,
+        {},
+        "PATCH"
+      );
+      setLocalData({ ...localData, dp: res.dp });
+
+      toast.success("Image Changed Successfully");
+    } catch (error: any) {
+      toast.error(error.message);
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
   return (
     <div className="bg-white rounded-lg shadow-md md:p-6 py-6 px-4 w-full mx-auto relative animate-[appearance-in_400ms]">
       <div className="flex items-center md:gap-6 gap-3">
-        <div className="md:h-[100px] md:w-[100px] h-[90px] w-[90px] border-2 border-red-300 p-1 rounded-md cursor-pointer transition-all duration-300">
-          <Image
-            src={data.dp || "/images/user.png"}
-            alt="user"
-            width={1000}
-            height={1000}
-            className="rounded-md w-full h-full"
-          />
-        </div>
+        <ImageCropper
+          loading={actionLoading}
+          buttonTitle="Upload"
+          onCrop={handleImageUpload}
+        >
+          <div className="md:h-[100px] md:w-[100px] h-[90px] w-[90px] border-2 border-red-300 p-1 rounded-md transition-all duration-300">
+            <Image
+              src={localData.dp || "/images/user.png"}
+              alt="user"
+              width={1000}
+              height={1000}
+              className="rounded-md w-full h-full"
+            />
+          </div>
+        </ImageCropper>
 
         <div className="w-[calc(100%-125px)]">
           <div className="flex items-center justify-between">
