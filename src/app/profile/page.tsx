@@ -1,19 +1,22 @@
-"use client";
-import ButtonContainer from "@/components/ButtonContainer";
-import { useRouter } from "next/navigation";
+import Container from "@/components/Container";
+import { apiGet } from "@/lib/apiCalls";
+import { getServerCookies } from "@/middleware";
 import React from "react";
-import toast from "react-hot-toast";
+import LogoutButton from "./LogoutButton";
+import MobileNumber from "./MobileNumber";
+import UserDetailsCard from "./UserDetailsCard";
 
-export default function ProfilePage() {
-  const router = useRouter();
-  const handleLogout = () => {
-    document.cookie = "auth=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    router.replace("/");
-    toast.success("Logged out successfully");
-  };
+export default async function ProfilePage() {
+  const auth = getServerCookies();
+  const data = await apiGet(`/users/${auth?.user?.id}`, auth);
+  console.log(data);
   return (
-    <div className="h-[60vh] flex justify-center items-center">
-      <ButtonContainer onClick={handleLogout}>Logout</ButtonContainer>
-    </div>
+    <Container className="p-3">
+      <UserDetailsCard data={data} />
+      <br />
+      <MobileNumber data={data} />
+      <br />
+      <LogoutButton />
+    </Container>
   );
 }
