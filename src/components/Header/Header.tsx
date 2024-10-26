@@ -18,6 +18,8 @@ import toast from "react-hot-toast";
 import ClientOnly from "../ClientOnly";
 import { div } from "framer-motion/client";
 import LandingCTA from "../LandingCTA";
+import Container from "../Container";
+import MyLogo from "../MyLogo";
 
 export default function Header() {
   return (
@@ -85,101 +87,60 @@ function HeaderComponent() {
     router.replace("/profile");
     // router.refresh();
   };
-
   return (
-    <div
-      className={`flex font-sans justify-between items-center p-3 transition-all duration-75 ${
-        homePath ? "fixed bg-transparent" : "border-b bg-white sticky"
-      } px-3 md:px-[90px] w-full top-0 h-[70px] ${
-        revealHeader ? "bg-white border-b h-[65px]" : ""
-      } z-20`}
-    >
-      <div>
-        <Link href="/">
-          <Image
-            width={1000}
-            height={1000}
-            className="h-[50px] w-[160px]"
-            src={"/images/logo.png"}
-            alt="Logo"
-          />
-        </Link>
-      </div>
-
-      <div className="flex items-center md:gap-5 gap-2">
-        {revealHeader || pathname != "/" ? (
-          <div className="hidden md:flex gap-5">
+    <div className={` flex justify-center sticky top-0 z-40`}>
+      <div
+        className={`${homePath ? "fixed" : "sticky"} ${revealHeader || !homePath ? "w-full bg-white border-b" : "shadow-md w-[calc(100%-16px)] md:w-[45%] bg-secondary m-2 md:top-4 rounded-md"} p-3 z-20 transition-all duration-200`}
+      >
+        <Container className="flex justify-between md:max-w-6xl">
+          {/* start */}
+          <MyLogo />
+          {/* middle */}
+          <div className="hidden md:flex gap-5 items-center">
             {routes.map((item, index) => (
               <Link
                 href={item.route}
                 key={item.id}
-                className={`text-md hover:text-pink-500 ${
+                className={`text-md hover:text-pink-500 hover:scale-125 transition-all duration-400 ${
                   pathname == item.route ? "text-pink-500" : "text-zinc-800"
                 }`}
               >
-                <p className="font-medium text-sm">{item.name}</p>
+                <i className={`fa-solid fa-${item.icon} text-sm`} />
+                {"  "}
+                <i className="font-medium text-sm">{item.name}</i>
               </Link>
             ))}
           </div>
-        ) : null}
-
-        {/* menu */}
-        <section
-          className={`md:hidden ${
-            isMenuOpen ? "visible" : "invisible"
-          } fixed top-[65px] w-full h-[calc(100%-65px)] bg-white left-0 py-1`}
-        >
-          {routes.map((item, index) => (
-            <Link
-              href={item.route}
-              key={item.id}
-              className={`hover:text-gray-500 ${
-                pathname == item.route ? "text-gray-500" : ""
-              }`}
-            >
-              <div className="p-2 px-4">
-                <p className="font-medium text-md">{item.name}</p>
-              </div>
-            </Link>
-          ))}
-          <ClientOnly>
-            {!auth ? (
-              <div className="p-4">
-                <LandingCTA className="p-1 text-sm transition-none  w-full" />
-              </div>
-            ) : null}
-          </ClientOnly>
-        </section>
-        {/* menu ends */}
-        {revealHeader || pathname != "/" ? (
-          <ClientOnly>
-            {!auth ? (
-              <>
-                <LandingCTA className="p-1 text-sm hidden md:flex" />
-              </>
-            ) : (
-              <div onClick={logout} className="cursor-pointer">
-                <Image
-                  alt="Profile image"
-                  width={1000}
-                  height={1000}
-                  src={auth.user.dp || "/images/user.png"}
-                  className="ml-2 mt-1 w-[25px] aspect-square rounded-full"
-                />
-              </div>
-            )}
-          </ClientOnly>
-        ) : null}
-        <Button
-          startContent={
-            <i
-              className={`fa-solid fa-${isMenuOpen ? "close" : "bars"} transition-all duration-300 text-[1.123rem]`}
-            ></i>
-          }
-          className={`bg-inherit md:hidden`}
-          isIconOnly={true}
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-        ></Button>
+          {/* end */}
+          <div className="flex gap-2 items-center md:min-w-[100px] justify-end">
+            <ClientOnly>
+              {auth ? (
+                <Link href={"/profile"}>
+                  <Image
+                    alt="Profile image"
+                    width={1000}
+                    height={1000}
+                    src={auth.user.dp || "/images/user.png"}
+                    className="ml-2 mt-1 w-[25px] aspect-square rounded-full"
+                  />
+                </Link>
+              ) : (
+                <LandingCTA className="text-xs hidden md:flex" />
+              )}
+            </ClientOnly>
+            <Button
+              startContent={
+                <i
+                  className={`fa-solid fa-${isMenuOpen ? "close" : "bars"} transition-all duration-300 text-[1.123rem]`}
+                ></i>
+              }
+              className={`bg-inherit md:hidden`}
+              isIconOnly={true}
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            ></Button>
+          </div>
+          {/* over */}
+        </Container>
       </div>
       <Modal
         size="xl"
@@ -200,6 +161,37 @@ function HeaderComponent() {
           )}
         </ModalContent>
       </Modal>
+      {/* menu */}
+      <section
+        className={`md:hidden ${
+          isMenuOpen ? "visible" : "invisible"
+        } fixed top-[65px] w-[calc(100%-16px)] h-[calc(100%-100px)] bg-white left-0 py-1 m-2 mt-3 z-30 rounded-md`}
+      >
+        {routes.map((item, index) => (
+          <Link
+            href={item.route}
+            key={item.id}
+            className={`text-md hover:text-pink-500 transition-all duration-400 ${
+              pathname == item.route ? "text-pink-500" : "text-zinc-800"
+            } block p-2 px-4 hover:bg-pink-100`}
+          >
+            {isMenuOpen ? (
+              <>
+                <i className={`fa-solid fa-${item.icon} text-sm`} />
+                <span className="font-medium text-sm px-3">{item.name}</span>
+              </>
+            ) : null}
+          </Link>
+        ))}
+        <ClientOnly>
+          {!auth ? (
+            <div className="p-4">
+              <LandingCTA className="p-1 text-sm transition-none  w-full" />
+            </div>
+          ) : null}
+        </ClientOnly>
+      </section>
+      {/* menu ends */}
     </div>
   );
 }
