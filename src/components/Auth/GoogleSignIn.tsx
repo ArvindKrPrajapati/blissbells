@@ -12,7 +12,7 @@ type props = {
 export default function GoogleSignIn({ closeModal }: props) {
   const [actionLoading, setActionLoading] = useState(false);
   const router = useRouter();
-  const [width, setWidth] = useState(0);
+  // const [width, setWidth] = useState(0);
 
   const handleGoogleLogin = async (obj: any) => {
     try {
@@ -38,42 +38,39 @@ export default function GoogleSignIn({ closeModal }: props) {
     }
   };
 
-  const handleResize = () => {
-    // Get the button element by its ref
-    const button = document.getElementById("btn");
+  // const handleResize = () => {
+  //   // Get the button element by its ref
+  //   const button = document.getElementById("btn");
 
-    if (button) {
-      // Update the state with the button width
-      setWidth(button.offsetWidth);
-    }
-  };
+  //   if (button) {
+  //     // Update the state with the button width
+  //     setWidth(button.offsetWidth);
+  //   }
+  // };
 
-  useEffect(() => {
-    window.addEventListener("resize", handleResize);
+  // useEffect(() => {
+  //   window.addEventListener("resize", handleResize);
 
-    // Initial measurement
-    handleResize();
+  //   // Initial measurement
+  //   handleResize();
 
-    // Cleanup the event listener on component unmount
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+  //   // Cleanup the event listener on component unmount
+  //   return () => {
+  //     window.removeEventListener("resize", handleResize);
+  //   };
+  // }, []);
 
   return (
-    <div className="w-full justify-center">
+    <div className="">
       {actionLoading ? <ActionLoader /> : null}
       <GoogleOAuthProvider clientId={CLIENT_ID}>
-        <Button className="w-full bg-white" id="btn">
-          <GoogleLogin
-            onSuccess={handleGoogleLogin}
-            onError={() => {
-              toast.error("Login Failed, try using otp");
-            }}
-            // useOneTap={true}
-            width={`${width}px`}
-          />
-        </Button>
+        <GoogleLogin
+          onSuccess={handleGoogleLogin}
+          onError={() => {
+            toast.error("Login Failed, try using otp");
+          }}
+          shape="circle"
+        />
       </GoogleOAuthProvider>
     </div>
   );

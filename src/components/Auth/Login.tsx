@@ -8,6 +8,7 @@ import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import ButtonContainer from "../ButtonContainer";
 import GoogleSignIn from "./GoogleSignIn";
+import FacebookLogin from "./FacebookLogin";
 
 type props = {
   closeModal: () => void;
@@ -556,7 +557,10 @@ export default function Login({ closeModal }: props) {
                   </p>
                 </div>
                 <p className="font-semibold text-center">or</p>
-                <GoogleSignIn closeModal={closeModal} />
+                <div className="flex items-center gap-3 md:flex-row flex-col justify-center">
+                  <GoogleSignIn closeModal={closeModal} />
+                  <FacebookLogin closeModal={closeModal} />
+                </div>
               </form>
             </>
           )}
