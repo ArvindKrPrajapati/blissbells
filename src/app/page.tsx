@@ -36,7 +36,7 @@ export default function Home() {
         <div className="flex md:flex-col flex-col-reverse pb-12">
           <Container>
             <div
-              className={`flex justify-center px-9 text-center md:pt-[150px] pt-[60px] `}
+              className={`flex justify-center px-9 text-center md:pt-[150px] pt-[50px] `}
             >
               <div className="px-3">
                 <h1
@@ -48,17 +48,20 @@ export default function Home() {
                   BlissBells keeps your celebrations close, ensuring no special
                   day is ever forgotten.
                 </h2>
+                <div className="flex justify-center mt-12 mb-4 md:mb-0">
+                  <LandingCTA className="text-sm md:text-lg" />
+                </div>
               </div>
             </div>
           </Container>
-          <div className="pt-[120px]">
+          <div className="md:pt-[90px] pt-[110px]">
             <LandingImageCarousel data={images} />
           </div>
         </div>
       </div>
 
       {/* features */}
-      <Container className="py-16 pt-8 px-4 md:mt-[450px]">
+      <Container className="py-16 pt-8 px-4 md:mt-[470px]">
         <h2 className="text-2xl font-semibold text-center py-6 bg-gradient-to-r from-red-500 to-red-800 bg-clip-text text-transparent animate-fade-in">
           Why Choose BlissBells?
         </h2>
