@@ -22,11 +22,13 @@ type props = {
   data: any[];
   loading: boolean;
   refresh: (page: number) => void;
+  variant?: "splitted" | "light" | "shadow" | "bordered";
 };
-export default function ListItem({
+export default function ListBlissbelltem({
   data,
   loading,
   refresh = (page) => {},
+  variant = "splitted",
 }: props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [actionLoading, setActionLoading] = useState(false);
@@ -53,7 +55,7 @@ export default function ListItem({
   }
   return (
     <>
-      <Accordion className="animate-[appearance-in_400ms]">
+      <Accordion className="animate-[appearance-in_400ms]" variant={variant}>
         {data.map((item: any, index: number) => (
           <AccordionItem
             key={index}
@@ -67,11 +69,17 @@ export default function ListItem({
                 src={item.image || "/images/user.png"}
               />
             }
+            disableIndicatorAnimation
+            indicator={
+              <i className="fa-solid fa-chevron-down text-pink-500 mt-9" />
+            }
             subtitle={
-              <div className="flex items-center gap-2 text-sm">
-                <div className="flex items-center gap-2 rounded-md p-[3px] px-3 bg-pink-100 border-1 border-pink-500 text-black text-xs">
+              <div className="flex justify-between items-start">
+                <div className="flex items-center gap-2 text-sm">
                   <i className="fa-regular fa-calendar text-xs" />
-                  <div>{indianDate(item.date).format("DD MMM YYYY")}</div>
+                  <div className="text-[0.8rem]">
+                    {indianDate(item.date).format("DD MMM YYYY")}
+                  </div>
                 </div>
                 <div className="bg-gradient-to-r rounded-md p-1 px-3 text-xs capitalize text-white from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 flex items-center gap-2">
                   <i className="fa-regular fa-star" />
@@ -122,7 +130,7 @@ export default function ListItem({
           onClose={onClose}
           className="bg-white mx-2"
           placement={isEdit ? "top" : "center"}
-          backdrop="blur"
+          backdrop="opaque"
           isDismissable={false}
           radius="sm"
           hideCloseButton={actionLoading}

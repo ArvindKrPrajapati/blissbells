@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { apiGet } from "@/lib/apiCalls";
 import PageNavigation from "@/components/PageNavigation";
 import CreateBlisbell from "@/app/blissbells/CreateBlisbell";
-import ListItem from "./ListBlissBellsItem";
+import ListBlissbelltem from "./ListBlissBellsItem";
 import { indianDate } from "@/lib/common";
 import Link from "next/link";
 import Image from "next/image";
@@ -95,7 +95,7 @@ export default function ListBlissBells({ past = false }: { past?: boolean }) {
         </div>
       ) : null}
 
-      <ListItem data={data} loading={loading} refresh={_init} />
+      <ListBlissbelltem data={data} loading={loading} refresh={_init} />
       <br />
       <br />
       {total > limit ? (

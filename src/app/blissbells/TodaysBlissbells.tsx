@@ -3,7 +3,7 @@ import { apiGet } from "@/lib/apiCalls";
 import { indianDate } from "@/lib/common";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import ListItem from "./ListBlissBellsItem";
+import ListBlissbelltem from "./ListBlissBellsItem";
 
 export default function TodaysBlissbells({
   loading,
@@ -55,7 +55,12 @@ export default function TodaysBlissbells({
         </div>
       </div>
       <div className="p-3">
-        <ListItem data={data} refresh={getTodayBlissbells} loading={loading} />
+        <ListBlissbelltem
+          data={data}
+          refresh={getTodayBlissbells}
+          loading={loading}
+          variant="light"
+        />
       </div>
     </div>
   );
