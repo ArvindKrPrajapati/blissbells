@@ -3,24 +3,41 @@ import React, { useState } from "react";
 import Accordion from "../../components/Accordian/Accordian";
 import ButtonContainer from "../../components/ButtonContainer";
 import toast from "react-hot-toast";
-import { apiPost, uploadFileWithData } from "@/lib/apiCalls";
+import { apiPatch, apiPost, uploadFileWithData } from "@/lib/apiCalls";
 import { Input } from "@nextui-org/react";
 import ImageCropper from "@/components/ImageCropper";
 
 type Props = {
   refresh: (page: number) => void;
+  isEdit?: boolean;
+  data?: any;
+  closeModal?: () => void;
 };
 
-export default function CreateBlisbell({ refresh = (page) => {} }: Props) {
-  const [eventType, setEventType] = useState("");
-  const [otherEventName, setOtherEventName] = useState("");
-  const [date, setDate] = useState("");
+export default function CreateBlisbell({
+  refresh = (page) => {},
+  isEdit = false,
+  data,
+  closeModal = () => {},
+}: Props) {
+  const [eventType, setEventType] = useState(
+    data
+      ? ["birthday", "anniversary"].includes(data.event)
+        ? data.event
+        : "other"
+      : ""
+  );
+  const [otherEventName, setOtherEventName] = useState(data?.event || "");
+  const [date, setDate] = useState(data?.date || "");
   const [actionLoading, setActionLoading] = useState(false);
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [notification, setNotification] = useState(true);
-  const [imagePreview, setImagePreview] = useState<string>("/images/user.png");
+  const [name, setName] = useState(data?.name || "");
+  const [description, setDescription] = useState(data?.description || "");
+  const [notification, setNotification] = useState(
+    data ? data.notification : true
+  );
+  const [imagePreview, setImagePreview] = useState<string>("");
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [isOpen, setIsOpen] = useState(isEdit);
 
   const clearState = () => {
     setEventType("");
@@ -31,17 +48,19 @@ export default function CreateBlisbell({ refresh = (page) => {} }: Props) {
     setNotification(true);
     setImagePreview("/images/user.png");
     setImageFile(null);
+    setIsOpen(false);
   };
 
   const handleCrop = (blob: Blob) => {
     const url = URL.createObjectURL(blob);
+
     setImagePreview(url);
     setImageFile(new File([blob], "cropped-image.jpg", { type: "image/jpeg" }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     try {
-      e.preventDefault();
       setActionLoading(true);
       const payload = {
         date,
@@ -52,13 +71,21 @@ export default function CreateBlisbell({ refresh = (page) => {} }: Props) {
       };
 
       if (imageFile) {
-        await uploadFileWithData(`/blissbells`, imageFile, payload);
+        await uploadFileWithData(
+          `/blissbells${isEdit ? `/${data?.id}` : ""}`,
+          imageFile,
+          payload,
+          isEdit ? "PATCH" : "POST"
+        );
       } else {
-        await apiPost(`/blissbells`, payload);
+        isEdit
+          ? await apiPatch(`/blissbells/${data.id}`, payload)
+          : await apiPost(`/blissbells`, payload);
       }
       clearState();
+      closeModal();
       refresh(1);
-      toast.success("Blissbell Added");
+      toast.success(`Blissbell ${isEdit ? "Updated" : "Created"} Successfully`);
     } catch (error: any) {
       toast.error(error.message);
     } finally {
@@ -71,12 +98,17 @@ export default function CreateBlisbell({ refresh = (page) => {} }: Props) {
       title={
         <div className="flex items-center justify-center">
           <i className="fa-solid fa-bell text-red-500 animate-bounce" />
-          <span className="font-bold text-red-500 ml-4">Create BlissBell</span>
+          <span className="font-bold text-red-500 ml-4">
+            {isEdit ? "Edit" : "Create"} BlissBell
+          </span>
         </div>
       }
-      className="animate-[appearance-in_200ms]"
+      className={`animate-[appearance-in_200ms] ${isEdit ? "border-none" : ""}`}
+      isOpen={isOpen}
+      setIsOpen={setIsOpen}
+      disabled={isEdit}
     >
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-4 p-2">
         <div className="flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0">
           <select
             value={eventType}
@@ -126,13 +158,15 @@ export default function CreateBlisbell({ refresh = (page) => {} }: Props) {
         </div>
         <div className="flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0 items-start">
           <div className="md:w-[52%] w-full flex gap-2">
-            <ImageCropper onCrop={handleCrop}>
-              <img
-                src={imagePreview}
-                alt="User"
-                className="w-12 h-12 rounded-full cursor-pointer border border-red-200 object-cover"
-              />
-            </ImageCropper>
+            <div className=" w-12 h-12">
+              <ImageCropper onCrop={handleCrop} id={data?.id || "imageInput"}>
+                <img
+                  src={imagePreview || data?.image || "/images/user.png"}
+                  alt="User"
+                  className="rounded-full cursor-pointer border border-red-200 object-cover"
+                />
+              </ImageCropper>
+            </div>
             <input
               type="text"
               value={name}
@@ -171,7 +205,7 @@ export default function CreateBlisbell({ refresh = (page) => {} }: Props) {
           type="submit"
           isLoading={actionLoading}
         >
-          Set Blissbell
+          {isEdit ? "Update" : "Set"} Blissbell
         </ButtonContainer>
       </form>
     </Accordion>

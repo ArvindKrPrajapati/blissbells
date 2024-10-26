@@ -4,9 +4,18 @@ type props = {
   title: React.ReactNode;
   children: React.ReactNode;
   className?: string;
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
+  disabled?: boolean;
 };
-export default function Accordion({ title, children, className }: props) {
-  const [isOpen, setIsOpen] = useState(false);
+export default function Accordion({
+  title,
+  children,
+  className,
+  isOpen,
+  setIsOpen,
+  disabled = false,
+}: props) {
   const contentRef = useRef<any>(null);
 
   useEffect(() => {
@@ -23,13 +32,16 @@ export default function Accordion({ title, children, className }: props) {
       <button
         className="w-full p-4 text-left bg-red-50 hover:bg-red-100 transition-colors duration-300 flex justify-between items-center"
         onClick={() => setIsOpen(!isOpen)}
+        disabled={disabled}
       >
         {title}
-        <i
-          className={`fa-solid fa-chevron-down text-red-500 transition-transform duration-300 ${
-            isOpen ? "transform rotate-180" : ""
-          }`}
-        />
+        {!disabled ? (
+          <i
+            className={`fa-solid fa-chevron-down text-red-500 transition-transform duration-300 ${
+              isOpen ? "transform rotate-180" : ""
+            }`}
+          />
+        ) : null}
       </button>
       <div
         ref={contentRef}

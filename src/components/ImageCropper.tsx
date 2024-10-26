@@ -9,12 +9,14 @@ type Props = {
   onCrop?: (blob: Blob) => void;
   loading?: boolean;
   buttonTitle?: string;
+  id?: string;
 };
 export default function ImageCropper({
   children,
   onCrop = (blob) => {},
   loading = false,
   buttonTitle = "Crop",
+  id = "imageInput",
 }: Props) {
   const [showCropper, setShowCropper] = useState(false);
   const [tempImage, setTempImage] = useState<string>("");
@@ -134,7 +136,7 @@ export default function ImageCropper({
     <>
       <input
         type="file"
-        id="imageInput"
+        id={id}
         accept="image/*"
         className="hidden"
         onClick={(e: any) => {
@@ -144,7 +146,7 @@ export default function ImageCropper({
       />
       <div
         className="cursor-pointer"
-        onClick={() => document.getElementById("imageInput")?.click()}
+        onClick={() => document.getElementById(id)?.click()}
       >
         {children || (
           <div className="p-2 px-3 rounded-md border-2 bg-gray-50 text-nowrap">
@@ -153,7 +155,10 @@ export default function ImageCropper({
         )}
       </div>
       {showCropper ? (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+          style={{ zIndex: 10000 }}
+        >
           <div className="bg-white p-6 px-4 rounded-lg max-w-lg w-full">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-lg font-semibold">Crop Image</h3>

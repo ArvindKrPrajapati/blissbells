@@ -16,6 +16,7 @@ import {
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import BlissBellsSkeleton from "./BlissBellsSkeleton";
+import CreateBlisbell from "./CreateBlisbell";
 
 type props = {
   data: any[];
@@ -30,6 +31,7 @@ export default function ListItem({
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [actionLoading, setActionLoading] = useState(false);
   const [selectedItem, setSelectedItem] = useState<any>(null);
+  const [isEdit, setIsEdit] = useState(false);
 
   const handleDelete = async () => {
     try {
@@ -85,14 +87,27 @@ export default function ListItem({
           >
             <p className="font-semibold text-sm">Description</p>
             {item.description || "No Description"}
-            <div className="text-end mt-4">
+            <div className="text-end mt-4 flex items-center justify-end gap-2">
+              <Button
+                isIconOnly={true}
+                startContent={<i className="fa-solid fa-pen" />}
+                variant="flat"
+                size="sm"
+                onClick={() => {
+                  setSelectedItem(item);
+                  setIsEdit(true);
+                  onOpen();
+                }}
+              />
               <Button
                 isIconOnly={true}
                 startContent={<i className="fa fa-trash" />}
                 color="danger"
                 variant="flat"
+                size="sm"
                 onClick={() => {
                   setSelectedItem(item);
+                  setIsEdit(false);
                   onOpen();
                 }}
               />
@@ -102,44 +117,58 @@ export default function ListItem({
       </Accordion>
       {isOpen ? (
         <Modal
-          size="md"
+          size={isEdit ? "5xl" : "2xl"}
           isOpen={isOpen}
           onClose={onClose}
           className="bg-white mx-2"
-          placement="center"
+          placement={isEdit ? "top" : "center"}
           backdrop="blur"
           isDismissable={false}
           radius="sm"
           hideCloseButton={actionLoading}
+          scrollBehavior="inside"
         >
           <ModalContent>
             {(onClose) => (
               <>
-                <ModalHeader className="flex flex-col gap-1 capitalize">
-                  Alert
-                </ModalHeader>
-                <ModalBody>Are you sure you want to delete?</ModalBody>
-                <ModalFooter>
-                  <Button
-                    color="primary"
-                    radius="sm"
-                    variant="flat"
-                    onPress={onClose}
-                    isDisabled={actionLoading}
-                  >
-                    Cancel
-                  </Button>
-                  <Button
-                    color="danger"
-                    radius="sm"
-                    className="text-white"
-                    onPress={handleDelete}
-                    isLoading={actionLoading}
-                    isDisabled={actionLoading}
-                  >
-                    Delete
-                  </Button>
-                </ModalFooter>
+                {isEdit ? (
+                  <>
+                    <CreateBlisbell
+                      refresh={refresh}
+                      isEdit={isEdit}
+                      data={selectedItem}
+                      closeModal={onClose}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <ModalHeader className="flex flex-col gap-1 capitalize">
+                      {isEdit ? "Edit BlissBell" : "Alert"}
+                    </ModalHeader>
+                    <ModalBody>Are you sure you want to delete?</ModalBody>
+                    <ModalFooter>
+                      <Button
+                        color="primary"
+                        radius="sm"
+                        variant="flat"
+                        onPress={onClose}
+                        isDisabled={actionLoading}
+                      >
+                        Cancel
+                      </Button>
+                      <Button
+                        color="danger"
+                        radius="sm"
+                        className="text-white"
+                        onPress={handleDelete}
+                        isLoading={actionLoading}
+                        isDisabled={actionLoading}
+                      >
+                        Delete
+                      </Button>
+                    </ModalFooter>
+                  </>
+                )}
               </>
             )}
           </ModalContent>
