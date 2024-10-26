@@ -23,7 +23,7 @@ export default function LandingImageCarousel({ data }: props) {
 
   return (
     <div className="flex justify-center px-6 animate-[appearance-in_600ms]">
-      <div className="flex items-center gap-1 sm:w-[50%] md:w-[68%]">
+      <div className="flex items-center gap-1 sm:w-[50%] md:w-[68%] lg:max-w-[1200px]">
         {imagesArr.map((item, index) => (
           <Image
             width={1000}
