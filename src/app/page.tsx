@@ -40,11 +40,11 @@ export default function Home() {
             >
               <div className="px-3">
                 <h1
-                  className={`md:text-8xl text-3xl my-secondary-text  pb-3 ${font.className}`}
+                  className={`md:text-8xl text-3xl my-secondary-text  pb-3 ${font.className} animate-[appearance-in_600ms]`}
                 >
                   {"Let life’s best moments ring loud."}
                 </h1>
-                <h2 className="my-tertiary-text pt-5 md:text-lg">
+                <h2 className="my-tertiary-text pt-5 md:text-lg animate-[appearance-in_800ms]">
                   BlissBells keeps your celebrations close, ensuring no special
                   day is ever forgotten.
                 </h2>
