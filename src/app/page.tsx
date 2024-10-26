@@ -36,9 +36,9 @@ export default function Home() {
         <div className="flex md:flex-col flex-col-reverse pb-12">
           <Container>
             <div
-              className={`flex justify-center px-7 text-center md:pt-[150px] pt-[60px] `}
+              className={`flex justify-center px-9 text-center md:pt-[150px] pt-[60px] `}
             >
-              <div>
+              <div className="px-3">
                 <h1
                   className={`md:text-8xl text-3xl my-secondary-text  pb-3 ${font.className}`}
                 >
