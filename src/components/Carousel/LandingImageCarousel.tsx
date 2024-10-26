@@ -22,21 +22,25 @@ export default function LandingImageCarousel({ data }: props) {
   };
 
   return (
-    <>
-      {imagesArr.map((item, index) => (
-        <Image
-          width={1000}
-          height={100}
-          key={item.id}
-          alt="img"
-          onMouseOver={() => handleHover(item.id)}
-          onMouseLeave={() => handleHover(2)}
-          src={item.image}
-          className={`relative shadow-2xl  rounded-lg transition-all duration-300 ${
-            item.hover ? "w-[45%] blur-0 shadow-red-100" : "w-[28%] blur-[2px]"
-          } ${index == 0 ? "left-3 hover:z-[11]" : index == 2 ? "hover:z-10 right-3" : "z-10"}`}
-        />
-      ))}
-    </>
+    <div className="flex justify-center px-6 animate-[appearance-in_600ms]">
+      <div className="flex items-center gap-1 sm:w-[50%] md:w-[68%]">
+        {imagesArr.map((item, index) => (
+          <Image
+            width={1000}
+            height={100}
+            key={item.id}
+            alt="img"
+            onMouseOver={() => handleHover(item.id)}
+            onMouseLeave={() => handleHover(2)}
+            src={item.image}
+            className={`relative shadow-2xl  rounded-lg transition-all duration-300 ${
+              item.hover
+                ? "w-[45%] blur-0 shadow-red-100"
+                : "w-[28%] blur-[2px]"
+            } ${index == 0 ? "left-3 hover:z-[11] animate-[appearance-in_1s]" : index == 2 ? "hover:z-10 right-3 animate-[appearance-in_800ms]" : "z-10 animate-[appearance-in_800ms]"}`}
+          />
+        ))}
+      </div>
+    </div>
   );
 }
