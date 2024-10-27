@@ -22,7 +22,7 @@ export default function LandingImageCarousel({ data }: props) {
   };
 
   return (
-    <div className="flex justify-center px-6 animate-[appearance-in_600ms] min-h-[200px]">
+    <div className="flex justify-center px-6 animate-[appearance-in_600ms]">
       <div className="flex items-center gap-1 sm:w-[50%] md:w-[68%] lg:max-w-[1200px]">
         {imagesArr.map((item, index) => (
           <Image
@@ -33,10 +33,7 @@ export default function LandingImageCarousel({ data }: props) {
             onMouseOver={() => handleHover(item.id)}
             onMouseLeave={() => handleHover(2)}
             src={item.image}
-            onLoadedMetadata={(e) => {
-              console.log(e);
-            }}
-            className={`relative shadow-2xl  rounded-lg transition-all duration-300 ${
+            className={`min-h-[120px] bg-[rgb(20,20,20)] relative shadow-2xl  rounded-lg transition-all duration-300 ${
               item.hover
                 ? "w-[45%] blur-0 shadow-red-100"
                 : "w-[28%] blur-[2px]"
