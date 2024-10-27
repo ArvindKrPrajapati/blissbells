@@ -41,7 +41,7 @@ const howItWorks = [
 ];
 export default function Home() {
   const FeatureCard = ({ icon, title, description }: any) => (
-    <div className="bg-gradient-to-br from-red-200 to-pink-200 bg-opacity-80 p-6 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:rotate-1">
+    <div className="animate-[appearance-in_1s] bg-gradient-to-br from-red-200 to-pink-200 bg-opacity-80 p-6 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:rotate-1">
       <i className={`${icon} text-3xl  w-12 h-12 text-red-500 mb-4`} />
       <h3 className="text-xl font-semibold mb-2 text-pink-900">{title}</h3>
       <p className="text-pink-700">{description}</p>
@@ -49,36 +49,34 @@ export default function Home() {
   );
   return (
     <>
-      <div className="my-bg">
-        <div className="flex md:flex-col flex-col-reverse pb-12">
-          <Container>
-            <div
-              className={`flex justify-center px-9 text-center md:pt-[150px] pt-[50px] `}
-            >
-              <div className="px-3">
-                <h1
-                  className={`md:text-8xl text-3xl my-secondary-text  pb-3 ${font.className} animate-[appearance-in_600ms]`}
-                >
-                  {"Let life’s best moments ring loud."}
-                </h1>
-                <h2 className="my-tertiary-text pt-5 md:text-lg animate-[appearance-in_800ms]">
-                  BlissBells keeps your celebrations close, ensuring no special
-                  day is ever forgotten.
-                </h2>
-                <div className="flex justify-center mt-12 mb-4 md:mb-0">
-                  <LandingCTA className="text-sm md:text-lg" />
-                </div>
+      <div className="md:block md:absolute z-0 inset-0 my-bg h-[100dvh] hidden" />
+      <div className="flex md:block flex-col-reverse pb-12 z-1 relative min-h-screen my-bg-md-white">
+        <Container>
+          <div
+            className={`flex justify-center px-9 text-center md:pt-[150px] pt-[50px]`}
+          >
+            <div className="px-3">
+              <h1
+                className={`lg:text-8xl md:text-6xl text-3xl my-secondary-text  pb-2 ${font.className} animate-[appearance-in_600ms]`}
+              >
+                {"Let life’s best moments ring loud."}
+              </h1>
+              <h2 className="my-tertiary-text pt-4 md:text-lg animate-[appearance-in_800ms]">
+                BlissBells keeps your celebrations close, ensuring no special
+                day is ever forgotten.
+              </h2>
+              <div className="flex justify-center mt-8">
+                <LandingCTA className="text-sm md:text-lg" />
               </div>
             </div>
-          </Container>
-          <div className="md:pt-[60px] pt-[110px]">
-            <LandingImageCarousel data={images} />
           </div>
+        </Container>
+        <div className="md:pt-[60px] pt-[110px]">
+          <LandingImageCarousel data={images} />
         </div>
       </div>
-
       {/* features */}
-      <Container className="py-16 pt-8 px-4 md:mt-[500px]">
+      <Container className="py-16 pt-0 px-4">
         <h2 className="text-2xl font-semibold text-center py-6 my-text">
           Why BlissBells?
         </h2>
@@ -101,7 +99,7 @@ export default function Home() {
         </div>
 
         {/* How it works section */}
-        <div className="md:py-12 py-6">
+        <div className="md:py-12 py-6 animate-[appearance-in_1s]">
           <h2 className="text-2xl font-semibold text-center py-12 my-text">
             How It Works?
           </h2>

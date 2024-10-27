@@ -90,7 +90,7 @@ function HeaderComponent() {
   return (
     <div className={`flex justify-center sticky top-0 z-40`}>
       <div
-        className={`${homePath ? "fixed" : "sticky"} ${revealHeader || !homePath ? "w-full bg-white border-b top-0" : "shadow-md w-[calc(100%-32px)] md:w-[45%] my-bg-secondary m-4 md:top-4 rounded-md"} p-3 z-20 transition-all duration-200`}
+        className={`${homePath ? "fixed" : "sticky"} ${revealHeader || !homePath ? "w-full bg-white border-b top-0" : "shadow-md w-[calc(100%-16px)] lg:w-[45%] my-bg-secondary m-2 rounded-md"} p-3 z-20 transition-all duration-200`}
       >
         <Container className="flex justify-between md:max-w-6xl">
           {/* start */}
@@ -135,7 +135,7 @@ function HeaderComponent() {
             <Button
               startContent={
                 <i
-                  className={`fa-solid fa-${isMenuOpen ? "close" : "bars"} transition-all duration-300 text-[1.123rem]`}
+                  className={`fa-solid fa-${isMenuOpen ? "close" : "bars"} transition-all duration-300 text-[1.123rem] my-text`}
                 ></i>
               }
               className={`bg-inherit md:hidden`}

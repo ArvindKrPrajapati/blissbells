@@ -20,13 +20,16 @@ body {
   @apply bg-gray-50 min-h-[100dvh];
 }
 .my-bg {
-  @apply bg-gradient-to-tr from-green-950 to-pink-950 min-h-[100dvh] md:h-[100dvh];
+  @apply bg-gradient-to-tr from-green-950 to-pink-950;
+}
+.my-bg-md-white {
+  @apply bg-gradient-to-tr from-green-950 to-pink-950 md:from-inherit md:to-inherit;
 }
 .my-bg-secondary {
   @apply bg-gradient-to-tr from-zinc-800 to-zinc-900;
 }
 .my-text {
-  @apply bg-gradient-to-r from-red-500 to-red-800 bg-clip-text text-transparent;
+  @apply bg-gradient-to-r from-red-500 to-red-700 bg-clip-text text-transparent;
 }
 .my-secondary-text {
   @apply bg-gradient-to-r from-pink-300 to-gray-100 bg-clip-text text-transparent;
