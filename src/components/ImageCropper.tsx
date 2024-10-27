@@ -67,56 +67,26 @@ export default function ImageCropper({
     const scaleX = imgRef.current.naturalWidth / imgRef.current.width;
     const scaleY = imgRef.current.naturalHeight / imgRef.current.height;
 
-    // Use the actual cropped dimensions
-    const cropX = crop.x * scaleX;
-    const cropY = crop.y * scaleY;
+    canvas.width = crop.width * scaleX;
+    canvas.height = crop.height * scaleY;
 
-    const cropWidth = crop.width;
-    const cropHeight = crop.height;
-
-    // First, create a temporary canvas at original cropped size
-    const tempCanvas = document.createElement("canvas");
-    tempCanvas.width = cropWidth;
-    tempCanvas.height = cropHeight;
-    const tempCtx = tempCanvas.getContext("2d");
-
-    if (!tempCtx) return;
-
-    // Draw the cropped portion at full resolution
-    tempCtx.drawImage(
-      imgRef.current,
-      cropX,
-      cropY,
-      cropWidth,
-      cropHeight,
-      0,
-      0,
-      cropWidth,
-      cropHeight
-    );
-
-    // Now set up the final canvas at desired size
-    canvas.width = 500; // Final desired size
-    canvas.height = 500;
     const ctx = canvas.getContext("2d");
-
     if (!ctx) return;
 
     // Enable image smoothing for better quality
     ctx.imageSmoothingEnabled = true;
     ctx.imageSmoothingQuality = "high";
 
-    // Draw the temporary canvas onto the final canvas
     ctx.drawImage(
-      tempCanvas,
+      imgRef.current,
+      crop.x * scaleX,
+      crop.y * scaleY,
+      crop.width * scaleX,
+      crop.height * scaleY,
       0,
       0,
-      cropWidth,
-      cropHeight,
-      0,
-      0,
-      canvas.width,
-      canvas.height
+      crop.width * scaleX,
+      crop.height * scaleY
     );
 
     // Convert to blob with high quality
@@ -131,7 +101,6 @@ export default function ImageCropper({
       1 // Maximum quality
     );
   };
-
   return (
     <>
       <input
