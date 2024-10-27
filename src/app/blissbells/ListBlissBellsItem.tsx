@@ -78,7 +78,7 @@ export default function ListBlissbelltem({
                 <div className="flex items-center gap-2 text-sm">
                   <i className="fa-regular fa-calendar text-xs" />
                   <div className="text-[0.8rem]">
-                    {indianDate(item.date).format("DD MMM YYYY")}
+                    {indianDate(item.date).format("DD MMM")}
                   </div>
                 </div>
                 <div className="bg-gradient-to-r rounded-md p-1 px-3 text-xs capitalize text-white from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 flex items-center gap-2">
