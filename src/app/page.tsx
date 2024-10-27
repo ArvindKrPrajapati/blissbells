@@ -3,6 +3,7 @@ import LandingImageCarousel from "@/components/Carousel/LandingImageCarousel";
 import LandingCTA from "@/components/LandingCTA";
 import Container from "@/components/Container";
 import Footer from "@/components/Footer/Footer";
+import Link from "next/link";
 const font = Sansita({ weight: "400", subsets: ["latin"] });
 
 const images = [
@@ -76,7 +77,7 @@ export default function Home() {
         </div>
       </div>
       {/* features */}
-      <Container className="py-16 pt-0 px-4">
+      <Container className="py-16 pt-0 px-4 pb-3 md:pb-16">
         <h2 className="text-2xl font-semibold text-center py-6 my-text">
           Why BlissBells?
         </h2>
@@ -129,6 +130,25 @@ export default function Home() {
         </div>
       </Container>
       {/* features end */}
+
+      {/* Call to action section */}
+      <div className="bg-gradient-to-r from-pink-700 to-pink-800 py-16 px-4">
+        <Container>
+          <div className="text-center">
+            <h2 className="text-3xl font-bold text-white mb-4">
+              Ready to Never Miss a Special Moment?
+            </h2>
+            <p className="text-white text-lg mb-8">
+              Join BlissBells today and start keeping track of all your
+              important dates.
+            </p>
+            <div className="flex justify-center">
+              <LandingCTA className="text-sm" />
+            </div>
+          </div>
+        </Container>
+      </div>
+
       <Footer />
     </>
   );
