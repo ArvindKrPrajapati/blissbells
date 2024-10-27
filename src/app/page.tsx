@@ -72,7 +72,7 @@ export default function Home() {
             </div>
           </div>
         </Container>
-        <div className="md:pt-[60px] pt-[110px]">
+        <div className="md:pt-[60px] pt-[90px]">
           <LandingImageCarousel data={images} />
         </div>
       </div>
