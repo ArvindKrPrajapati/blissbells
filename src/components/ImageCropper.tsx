@@ -146,6 +146,7 @@ export default function ImageCropper({
                 crop={crop}
                 onChange={(c) => setCrop(c)}
                 aspect={1 / 1}
+                className="max-w-full max-h-[450px]"
               >
                 <img
                   ref={imgRef}
