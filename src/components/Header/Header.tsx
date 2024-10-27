@@ -49,7 +49,7 @@ function HeaderComponent() {
         setRevealHeader(false);
       }
     };
-
+    handleScroll();
     window.addEventListener("scroll", handleScroll);
 
     return () => {
@@ -90,11 +90,11 @@ function HeaderComponent() {
   return (
     <div className={`flex justify-center sticky top-0 z-40`}>
       <div
-        className={`${homePath ? "fixed" : "sticky"} ${revealHeader || !homePath ? "w-full bg-white border-b top-0" : "shadow-md w-[calc(100%-16px)] md:w-[45%] bg-secondary m-2 md:top-4 rounded-md"} p-3 z-20 transition-all duration-200`}
+        className={`${homePath ? "fixed" : "sticky"} ${revealHeader || !homePath ? "w-full bg-white border-b top-0" : "shadow-md w-[calc(100%-32px)] md:w-[45%] my-bg-secondary m-4 md:top-4 rounded-md"} p-3 z-20 transition-all duration-200`}
       >
         <Container className="flex justify-between md:max-w-6xl">
           {/* start */}
-          <MyLogo />
+          <MyLogo revealHeader={revealHeader} />
           {/* middle */}
           <div className="hidden md:flex gap-5 items-center">
             {routes.map((item, index) => (
@@ -102,12 +102,16 @@ function HeaderComponent() {
                 href={item.route}
                 key={item.id}
                 className={`text-md hover:text-pink-500 hover:scale-125 transition-all duration-400 ${
-                  pathname == item.route ? "text-pink-500" : "text-zinc-800"
+                  pathname == item.route
+                    ? "text-pink-500"
+                    : revealHeader
+                      ? "text-zinc-900"
+                      : "text-zinc-100"
                 }`}
               >
                 <i className={`fa-solid fa-${item.icon} text-sm`} />
                 {"  "}
-                <i className="font-medium text-sm">{item.name}</i>
+                <span className="font-medium text-sm">{item.name}</span>
               </Link>
             ))}
           </div>

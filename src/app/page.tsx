@@ -22,6 +22,23 @@ const images = [
     hover: false,
   },
 ];
+const howItWorks = [
+  {
+    id: 1,
+    text: "Sign Up",
+    subText: "Create your account in seconds and get started",
+  },
+  {
+    id: 2,
+    text: "Add Important Dates",
+    subText: "Input birthdays, anniversaries, and special occasions",
+  },
+  {
+    id: 3,
+    text: "Never Miss a Moment",
+    subText: "Receive early and timely reminders and celebrate with loved ones",
+  },
+];
 export default function Home() {
   const FeatureCard = ({ icon, title, description }: any) => (
     <div className="bg-gradient-to-br from-red-200 to-pink-200 bg-opacity-80 p-6 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:rotate-1">
@@ -54,16 +71,16 @@ export default function Home() {
               </div>
             </div>
           </Container>
-          <div className="md:pt-[90px] pt-[110px]">
+          <div className="md:pt-[60px] pt-[110px]">
             <LandingImageCarousel data={images} />
           </div>
         </div>
       </div>
 
       {/* features */}
-      <Container className="py-16 pt-8 px-4 md:mt-[470px]">
-        <h2 className="text-2xl font-semibold text-center py-6 bg-gradient-to-r from-red-500 to-red-800 bg-clip-text text-transparent animate-fade-in">
-          Why Choose BlissBells?
+      <Container className="py-16 pt-8 px-4 md:mt-[500px]">
+        <h2 className="text-2xl font-semibold text-center py-6 my-text">
+          Why BlissBells?
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-4">
           <FeatureCard
@@ -81,6 +98,36 @@ export default function Home() {
             title="Show You Care"
             description="Strengthen relationships by always remembering important dates."
           />
+        </div>
+
+        {/* How it works section */}
+        <div className="md:py-12 py-6">
+          <h2 className="text-2xl font-semibold text-center py-12 my-text">
+            How It Works?
+          </h2>
+          <div className="flex flex-col-reverse md:flex-row items-center gap-8">
+            <div className="flex-1 p-3">
+              <ol className="relative text-gray-500 border-s border-gray-200 dark:border-gray-700 dark:text-gray-400">
+                {howItWorks.map((item) => (
+                  <li className="mb-10 ms-6" key={item.id}>
+                    <span className="absolute flex items-center justify-center w-8 h-8 bg-pink-600 rounded-full -start-4 text-white">
+                      {item.id}
+                    </span>
+                    <h3 className="text-black font-semibold">{item.text}</h3>
+                    <p className="text-sm text-gray-600">{item.subText}</p>
+                  </li>
+                ))}
+              </ol>
+            </div>
+
+            <div className="flex-1">
+              <img
+                src="/images/celebration.jpg"
+                alt="How BlissBells Works"
+                className="rounded-lg shadow-lg shadow-pink-300 w-full max-w-md mx-auto"
+              />
+            </div>
+          </div>
         </div>
       </Container>
       {/* features end */}
