@@ -3,6 +3,7 @@ import { Button } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import React from "react";
 import toast from "react-hot-toast";
+import ButtonContainer from "../ButtonContainer";
 
 export default function LogoutButton() {
   const router = useRouter();
@@ -13,14 +14,10 @@ export default function LogoutButton() {
     router.refresh();
   };
   return (
-    <Button
-      radius="sm"
-      variant="flat"
-      color="danger"
-      className="w-full"
-      onClick={logout}
-    >
-      Logout
-    </Button>
+    <div className="animate-[appearance-in_1200ms]">
+      <ButtonContainer onClick={logout} className="w-full rounded-md text-sm">
+        Logout
+      </ButtonContainer>
+    </div>
   );
 }

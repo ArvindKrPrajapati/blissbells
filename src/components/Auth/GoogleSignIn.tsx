@@ -28,6 +28,7 @@ export default function GoogleSignIn({ closeModal }: props) {
         document.cookie = `auth=${JSON.stringify(
           res
         )}; expires=${expirationDate.toUTCString()}; path=/`;
+        router.refresh();
         closeModal();
         router.push("/blissbells");
         toast.success("Login Successfully");
