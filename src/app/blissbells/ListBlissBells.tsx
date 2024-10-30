@@ -71,7 +71,7 @@ export default function ListBlissBells({ past = false }: { past?: boolean }) {
         <div className="mt-5" />
       )}
 
-      {noDataFound && data.length == 0 ? (
+      {loading == false && noDataFound && data.length == 0 ? (
         <div className="flex justify-center items-center">
           <div>
             <Image
