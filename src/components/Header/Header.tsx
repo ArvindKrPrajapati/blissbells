@@ -67,9 +67,13 @@ function HeaderComponent() {
   };
 
   useEffect(() => {
-    const auth = searchParams.get("auth")?.toString();
-    if (auth == "true") {
-      openModal();
+    const authQuery = searchParams.get("auth")?.toString();
+    if (authQuery == "true") {
+      if (auth) {
+        closeModal();
+      } else {
+        openModal();
+      }
     } else {
       closeModal();
     }
