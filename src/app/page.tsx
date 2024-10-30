@@ -77,7 +77,7 @@ export default function Home() {
         </div>
       </div>
       {/* features */}
-      <Container className="py-16 pt-0 px-4 pb-3 md:pb-16">
+      <Container className="py-16 pt-4 px-4 pb-3 md:pb-16">
         <h2 className="text-2xl font-semibold text-center py-6 my-text">
           Why BlissBells?
         </h2>
