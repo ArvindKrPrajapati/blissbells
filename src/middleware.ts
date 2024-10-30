@@ -11,10 +11,10 @@ export const getServerCookies = () => {
 };
 
 export async function middleware(request: NextRequest) {
-  const auth = getServerCookies();
-  if (!auth) {
-    return NextResponse.redirect(new URL("/?auth=true", request.url));
-  }
+  // const auth = getServerCookies();
+  // if (!auth) {
+  //   return NextResponse.redirect(new URL("/?auth=true", request.url));
+  // }
 
   // if logged in and going to login screen then send don't let modal to open
   // this logic in header component
