@@ -5,6 +5,7 @@ type route = {
   icon: string;
   protected: boolean;
 };
+
 export const routes: route[] = [
   { id: 1, name: "Home", route: "/", icon: "home", protected: false },
   {
