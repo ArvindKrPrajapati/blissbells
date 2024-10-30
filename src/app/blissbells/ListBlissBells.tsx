@@ -23,7 +23,9 @@ export default function ListBlissBells({ past = false }: { past?: boolean }) {
     try {
       setLoading(true);
       const res = await apiGet(`${url}&$skip=${(page - 1) * limit}`);
-      setNoDataFound(res.data.length === 0);
+      if (past) {
+        setNoDataFound(res.data.length === 0);
+      }
       setData(res.data);
       setTotal(res.total);
       setSkip(res.skip);
