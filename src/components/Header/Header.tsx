@@ -96,12 +96,12 @@ function HeaderComponent() {
       <div
         className={`${homePath ? "fixed" : "sticky"} ${revealHeader || !homePath ? "w-full bg-white top-0" : "shadow-md w-[calc(100%-16px)] lg:w-[45%] my-bg-secondary m-2 rounded-md"} shadow-sm p-3 z-20 transition-all duration-200`}
       >
-        <Container className="flex justify-between md:max-w-6xl">
+        <Container className="flex justify-between">
           {/* start */}
           <MyLogo revealHeader={revealHeader} />
           {/* middle */}
           <div
-            className={`hidden ${revealHeader ? "md:flex" : ""} gap-5 items-center transition-all duration-300`}
+            className={`hidden ${revealHeader || !homePath ? "md:flex" : ""} gap-5 items-center transition-all duration-300`}
           >
             {routes.map((item, index) => (
               <Link

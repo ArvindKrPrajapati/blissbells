@@ -5,7 +5,7 @@ type props = {
 };
 export default function Container({ children, className }: props) {
   return (
-    <div className={`md:max-w-5xl mx-auto w-full font-sans ${className}`}>
+    <div className={`md:max-w-6xl mx-auto w-full font-sans ${className}`}>
       {children}
     </div>
   );
