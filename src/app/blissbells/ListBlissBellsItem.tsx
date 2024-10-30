@@ -15,8 +15,8 @@ import {
 } from "@nextui-org/react";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
-import BlissBellsSkeleton from "./BlissBellsSkeleton";
 import CreateBlisbell from "./CreateBlisbell";
+import ActionLoader from "@/components/ActionLoader";
 
 type props = {
   data: any[];
@@ -51,7 +51,7 @@ export default function ListBlissbelltem({
   };
 
   if (loading) {
-    return <BlissBellsSkeleton />;
+    return <ActionLoader />;
   }
   return (
     <>
