@@ -55,7 +55,7 @@ export default function Sidebar({ routes }: props) {
             <Link
               key={index}
               href={`${item.route}`}
-              className={`px-3 py-2 text-[0.95rem] hover:bg-red-100 ${pathname == item.route ? "bg-red-100 text-red-800" : "bg-inherit text-red-600"} rounded-md font-medium transition-all duration-300`}
+              className={`px-3 py-2 text-[0.95rem] hover:bg-zinc-200 hover:text-zinc-800 ${pathname == item.route ? "bg-zinc-200 text-zinc-800" : "bg-inherit text-zinc-400"} rounded-md font-medium transition-all duration-300`}
             >
               <i className={`${item.icon} mr-2`} />
               {item.name}
