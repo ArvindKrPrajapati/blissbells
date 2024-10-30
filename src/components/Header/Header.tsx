@@ -96,7 +96,9 @@ function HeaderComponent() {
           {/* start */}
           <MyLogo revealHeader={revealHeader} />
           {/* middle */}
-          <div className="hidden md:flex gap-5 items-center">
+          <div
+            className={`hidden ${revealHeader ? "md:flex" : ""} gap-5 items-center transition-all duration-300`}
+          >
             {routes.map((item, index) => (
               <Link
                 href={item.route}

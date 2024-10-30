@@ -21,7 +21,7 @@ export default function LandingCTA({ className }: { className?: string }) {
             Create Blissbells
           </p>
         ) : (
-          "Start Remembering"
+          "Send Blissbells"
         )}
       </ButtonContainer>
     </ClientOnly>
