@@ -29,7 +29,7 @@ export default function GoogleSignIn({ closeModal }: props) {
           res
         )}; expires=${expirationDate.toUTCString()}; path=/`;
         closeModal();
-        router.replace("/blissbells");
+        router.push("/blissbells");
         toast.success("Login Successfully");
       }
     } catch (error: any) {

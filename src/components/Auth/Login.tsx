@@ -96,7 +96,7 @@ export default function Login({ closeModal }: props) {
             res
           )}; expires=${expirationDate.toUTCString()}; path=/`;
           closeModal();
-          router.replace("/blissbells");
+          router.push("/blissbells");
           toast.success("Login Successfully");
         } else {
           toast.error(res.error);
@@ -144,7 +144,7 @@ export default function Login({ closeModal }: props) {
             res
           )}; expires=${expirationDate.toUTCString()}; path=/`;
           closeModal();
-          router.replace("/blissbells");
+          router.push("/blissbells");
           toast.success("Login Successfully");
         } else {
           toast.error(res.error);

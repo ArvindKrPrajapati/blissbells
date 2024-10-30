@@ -1,6 +1,6 @@
 import Container from "@/components/Container";
 import { apiGet } from "@/lib/apiCalls";
-import { getServerCookies } from "../../../middleware";
+import { getServerCookies } from "../../middleware";
 import React from "react";
 import LogoutButton from "./LogoutButton";
 import MobileNumber from "./MobileNumber";

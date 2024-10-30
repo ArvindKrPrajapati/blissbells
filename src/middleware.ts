@@ -15,6 +15,7 @@ export async function middleware(request: NextRequest) {
   const auth = getServerCookies();
   const route = request.nextUrl.pathname;
   const url = new URL(request.url);
+  console.log({ route });
 
   for (let r of protectedRoutes) {
     if (!auth) {
