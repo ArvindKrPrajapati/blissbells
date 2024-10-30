@@ -150,7 +150,7 @@ function HeaderComponent() {
         size="xl"
         isOpen={isOpen}
         onClose={closeModal}
-        className="bg-white min-h-[calc(100dvh-10px)] md:min-h-max"
+        className="bg-white min-h-[calc(100%-10px)] md:min-h-max"
         placement="top"
         scrollBehavior="inside"
         backdrop="blur"

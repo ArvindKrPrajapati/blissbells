@@ -16,8 +16,12 @@
 ::-webkit-scrollbar-track {
   background-color: transparent;
 }
+html,
 body {
-  @apply bg-gray-50 min-h-[100dvh];
+  height: 100%;
+}
+body {
+  @apply bg-gray-50 min-h-full;
 }
 .my-bg {
   @apply bg-gradient-to-tr from-green-950 to-pink-950;

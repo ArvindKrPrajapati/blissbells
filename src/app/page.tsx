@@ -50,8 +50,8 @@ export default function Home() {
   );
   return (
     <>
-      <div className="md:block md:absolute z-0 inset-0 my-bg h-[100dvh] hidden" />
-      <div className="flex md:block flex-col-reverse pb-12 z-1 relative min-h-screen my-bg-md-white">
+      <div className="md:block md:absolute z-0 inset-0 my-bg h-full hidden" />
+      <div className="flex md:block flex-col-reverse pb-12 z-1 relative min-h-full my-bg-md-white">
         <Container>
           <div
             className={`flex justify-center px-9 text-center md:pt-[150px] pt-[50px]`}
