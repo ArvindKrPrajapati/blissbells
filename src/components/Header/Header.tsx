@@ -90,7 +90,7 @@ function HeaderComponent() {
   return (
     <div className={`flex justify-center sticky top-0 z-40`}>
       <div
-        className={`${homePath ? "fixed shadow-sm" : "sticky border-b"} ${revealHeader || !homePath ? "w-full bg-white top-0" : "shadow-md w-[calc(100%-16px)] lg:w-[45%] my-bg-secondary m-2 rounded-md"} p-3 z-20 transition-all duration-200`}
+        className={`${homePath ? "fixed" : "sticky"} ${revealHeader || !homePath ? "w-full bg-white top-0" : "shadow-md w-[calc(100%-16px)] lg:w-[45%] my-bg-secondary m-2 rounded-md"} shadow-sm p-3 z-20 transition-all duration-200`}
       >
         <Container className="flex justify-between md:max-w-6xl">
           {/* start */}
