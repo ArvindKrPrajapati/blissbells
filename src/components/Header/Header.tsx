@@ -18,7 +18,6 @@ import toast from "react-hot-toast";
 import ClientOnly from "../ClientOnly";
 import { div } from "framer-motion/client";
 import LandingCTA from "../LandingCTA";
-import Container from "../Container";
 import MyLogo from "../MyLogo";
 
 export default function Header() {
@@ -96,7 +95,7 @@ function HeaderComponent() {
       <div
         className={`${homePath ? "fixed" : "sticky"} ${revealHeader || !homePath ? "w-full bg-white top-0" : "shadow-md w-[calc(100%-16px)] lg:w-[45%] my-bg-secondary m-2 rounded-md"} shadow-sm p-3 z-20 transition-all duration-200`}
       >
-        <Container className="flex justify-between">
+        <div className="flex justify-between">
           {/* start */}
           <MyLogo revealHeader={revealHeader} />
           {/* middle */}
@@ -150,7 +149,7 @@ function HeaderComponent() {
             ></Button>
           </div>
           {/* over */}
-        </Container>
+        </div>
       </div>
       <Modal
         size="xl"
