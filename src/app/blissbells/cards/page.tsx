@@ -1,6 +1,7 @@
+"use client";
 import PageTitle from "@/components/PageTitle";
 import React from "react";
-import { cardsData } from "./data";
+import PaginatedList from "@/components/PaginatedList";
 import ImageViewer from "@/components/ImageViewer";
 
 export default function CardsPage() {
@@ -8,7 +9,11 @@ export default function CardsPage() {
     <div>
       <PageTitle title="Blissbell Cards" />
 
-      <ImageViewer data={cardsData} />
+      <PaginatedList
+        url="/card-template"
+        maxPerPage={10}
+        render={(data) => <ImageViewer data={data} />}
+      />
     </div>
   );
 }
