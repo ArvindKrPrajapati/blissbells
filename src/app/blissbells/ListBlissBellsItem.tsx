@@ -51,7 +51,7 @@ export default function ListBlissbelltem({
   };
 
   if (loading) {
-    return <ActionLoader />;
+    return <ActionLoader isFixed={false} />;
   }
   return (
     <>
