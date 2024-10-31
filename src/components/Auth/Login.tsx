@@ -95,19 +95,19 @@ export default function Login({ closeModal }: props) {
           document.cookie = `auth=${JSON.stringify(
             res
           )}; expires=${expirationDate.toUTCString()}; path=/`;
-          closeModal();
+          // closeModal();
           router.refresh();
-
-          // router.push("/blissbells");
-          toast.success("Login Successfully");
+          setTimeout(() => {
+            router.push("/blissbells");
+            toast.success("Login Successfully");
+          }, 300);
         } else {
           toast.error(res.error);
         }
       }
     } catch (error: any) {
-      toast.error(error.message);
-    } finally {
       setLoading(false);
+      toast.error(error.message);
     }
   };
 
@@ -145,18 +145,19 @@ export default function Login({ closeModal }: props) {
           document.cookie = `auth=${JSON.stringify(
             res
           )}; expires=${expirationDate.toUTCString()}; path=/`;
-          closeModal();
+          // closeModal();
           router.refresh();
-          // router.push("/blissbells");
-          toast.success("Login Successfully");
+          setTimeout(() => {
+            router.push("/blissbells");
+            toast.success("Login Successfully");
+          }, 300);
         } else {
           toast.error(res.error);
         }
       }
     } catch (error: any) {
-      toast.error(error.message);
-    } finally {
       setLoading(false);
+      toast.error(error.message);
     }
   };
 

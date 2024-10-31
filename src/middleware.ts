@@ -15,11 +15,8 @@ export async function middleware(request: NextRequest) {
   const auth = getServerCookies();
 
   if (!auth) {
-    console.log({ gya: "hii" });
     return NextResponse.redirect(new URL("/?auth=true", request.url));
   }
-
-  console.log({ hi: "aya" });
 
   return NextResponse.next();
 }
