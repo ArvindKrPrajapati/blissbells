@@ -95,10 +95,10 @@ export default function Login({ closeModal }: props) {
           document.cookie = `auth=${JSON.stringify(
             res
           )}; expires=${expirationDate.toUTCString()}; path=/`;
-          router.refresh();
           closeModal();
+          router.refresh();
 
-          router.push("/blissbells");
+          // router.push("/blissbells");
           toast.success("Login Successfully");
         } else {
           toast.error(res.error);
@@ -145,9 +145,9 @@ export default function Login({ closeModal }: props) {
           document.cookie = `auth=${JSON.stringify(
             res
           )}; expires=${expirationDate.toUTCString()}; path=/`;
-          router.refresh();
           closeModal();
-          router.push("/blissbells");
+          router.refresh();
+          // router.push("/blissbells");
           toast.success("Login Successfully");
         } else {
           toast.error(res.error);
