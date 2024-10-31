@@ -93,8 +93,8 @@ export default function ListBlissbelltem({
               </p>
             }
           >
-            <p className="font-semibold text-sm">Description</p>
-            {item.description || "No Description"}
+            <p className="text-gray-700 text-xs">Description</p>
+            {item.description || "NA"}
             <div className="text-end mt-4 flex items-center justify-end gap-2">
               <Button
                 isIconOnly={true}
