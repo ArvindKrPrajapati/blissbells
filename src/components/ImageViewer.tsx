@@ -7,7 +7,7 @@ type Props = {
 };
 export default function ImageViewer({ data }: Props) {
   return (
-    <div className="columns-2 md:columns-3 gap-4 p-4">
+    <div className="columns-2 md:columns-3 gap-4 p-2">
       {data.map((card) => (
         <div
           className="mb-4 w-full bg-gray-100 rounded-lg overflow-hidden"
