@@ -9,6 +9,7 @@ import { indianDate } from "@/lib/common";
 import Link from "next/link";
 import Image from "next/image";
 import TodaysBlissbells from "./TodaysBlissbells";
+import PageTitle from "@/components/PageTitle";
 
 export default function ListBlissBells({ past = false }: { past?: boolean }) {
   const [loading, setLoading] = useState(true);
@@ -48,13 +49,10 @@ export default function ListBlissBells({ past = false }: { past?: boolean }) {
           <TodaysBlissbells loading={loading} setNoDataFound={setNoDataFound} />
         </>
       )}
+      <br />
       {data.length ? (
-        <h2 className="my-3 mt-5 font-semibold my-text animate-[appearance-in_400ms]">
-          {past ? "Past" : "Upcoming"} Blissbells
-        </h2>
-      ) : (
-        <div className="mt-5" />
-      )}
+        <PageTitle title={`${past ? "Past" : "Upcoming"} Blissbells`} />
+      ) : null}
 
       {loading == false && noDataFound && data.length == 0 ? (
         <div className="flex justify-center items-center">
