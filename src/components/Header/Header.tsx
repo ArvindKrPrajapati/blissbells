@@ -107,7 +107,8 @@ function HeaderComponent() {
                 href={item.route}
                 key={item.id}
                 className={`text-md hover:text-pink-500 hover:scale-125 transition-all duration-400 ${
-                  pathname == item.route
+                  pathname == item.route ||
+                  item.children?.some((i) => i.route == pathname)
                     ? "text-pink-500"
                     : revealHeader || !homePath
                       ? "text-zinc-900"
