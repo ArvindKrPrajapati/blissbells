@@ -60,6 +60,7 @@ export default function TodaysBlissbells({
           refresh={getTodayBlissbells}
           loading={loading}
           variant="light"
+          showCreateButton={true}
         />
       </div>
     </div>

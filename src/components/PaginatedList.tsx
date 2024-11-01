@@ -8,9 +8,15 @@ type Props = {
   url: string;
   render: (data: any) => React.ReactNode;
   maxPerPage?: number;
+  isLoaderFixed?: boolean;
 };
 
-export default function PaginatedList({ url, maxPerPage = 5, render }: Props) {
+export default function PaginatedList({
+  url,
+  maxPerPage = 5,
+  render,
+  isLoaderFixed = false,
+}: Props) {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [skip, setSkip] = useState(0);
@@ -38,7 +44,7 @@ export default function PaginatedList({ url, maxPerPage = 5, render }: Props) {
   }, []);
 
   if (loading) {
-    return <ActionLoader isFixed={false} />;
+    return <ActionLoader isFixed={isLoaderFixed} />;
   }
   return (
     <>

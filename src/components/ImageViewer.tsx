@@ -4,14 +4,23 @@ import React from "react";
 
 type Props = {
   data: any[];
+  onSelect?: (item: any) => void;
+  selected?: any;
 };
-export default function ImageViewer({ data }: Props) {
+export default function ImageViewer({
+  data,
+  onSelect = (item: any) => {},
+  selected,
+}: Props) {
   return (
-    <div className="columns-2 md:columns-3 gap-4 p-2">
+    <div className="columns-2 md:columns-3 gap-4 p-2 ">
       {data.map((card) => (
         <div
-          className="mb-4 w-full bg-gray-100 rounded-lg overflow-hidden"
+          className={`mb-4 w-full bg-gray-100 rounded-lg overflow-hidden animate-[appearance-in_600ms] cursor-pointer ${selected && selected.id == card.id ? "border-2 border-blue-400" : ""}`}
           key={card.id}
+          onClick={() => {
+            onSelect(card);
+          }}
         >
           <Image
             src={card.image}

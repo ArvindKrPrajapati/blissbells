@@ -17,18 +17,21 @@ import React, { useState } from "react";
 import toast from "react-hot-toast";
 import CreateBlisbell from "./CreateBlisbell";
 import ActionLoader from "@/components/ActionLoader";
+import CreateCard from "./CreateCard";
 
 type props = {
   data: any[];
   loading: boolean;
   refresh: (page: number) => void;
   variant?: "splitted" | "light" | "shadow" | "bordered";
+  showCreateButton?: boolean;
 };
 export default function ListBlissbelltem({
   data,
   loading,
   refresh = (page) => {},
   variant = "splitted",
+  showCreateButton = false,
 }: props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [actionLoading, setActionLoading] = useState(false);
@@ -96,6 +99,7 @@ export default function ListBlissbelltem({
             <p className="text-gray-700 text-xs">Description</p>
             {item.description || "NA"}
             <div className="text-end mt-4 flex items-center justify-end gap-2">
+              {showCreateButton ? <CreateCard item={item} /> : null}
               <Button
                 isIconOnly={true}
                 startContent={<i className="fa-solid fa-pen" />}
