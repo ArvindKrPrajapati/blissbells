@@ -30,32 +30,56 @@ export default function CreateCard({ item }: Props) {
 
   const handleDownload = async () => {
     try {
+      if (!selectedCard?.template) return;
       setActionLoading(true);
-      const res = await apiGet(
-        `/user-cards/${selectedCard.id}?name=${item.name}&image=${item.image}`
+
+      // Get the SVG element
+      const svgElement = document.querySelector(
+        `#${selectedCard?.html_id} svg`
       );
-      const base64Data = res.image;
-      const byteCharacters = atob(base64Data.split(",")[1]);
-      const byteNumbers = new Array(byteCharacters.length);
+      if (!svgElement) return;
 
-      for (let i = 0; i < byteCharacters.length; i++) {
-        byteNumbers[i] = byteCharacters.charCodeAt(i);
-      }
+      // Create canvas with SVG dimensions
+      const canvas = document.createElement("canvas");
+      const svgRect = svgElement.getBoundingClientRect();
+      canvas.width = svgRect.width;
+      canvas.height = svgRect.height;
 
-      const byteArray = new Uint8Array(byteNumbers);
-      const blob = new Blob([byteArray], { type: "image/jpeg" });
+      // Get canvas context and set white background
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return;
 
-      const downloadLink = document.createElement("a");
-      downloadLink.href = URL.createObjectURL(blob);
-      downloadLink.download = `${item.name.toLowerCase().replaceAll(" ", "-")}_Happy_birthday.jpg`;
-      document.body.appendChild(downloadLink);
-      downloadLink.click();
-      document.body.removeChild(downloadLink);
-      toast.success("Downloaded successfully");
+      ctx.fillStyle = "white";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Convert SVG to data URL
+      const svgData = new XMLSerializer().serializeToString(svgElement);
+      const svgBlob = new Blob([svgData], {
+        type: "image/svg+xml;charset=utf-8",
+      });
+      const url = URL.createObjectURL(svgBlob);
+
+      // Create image and draw to canvas
+      const img = new Image();
+      img.onload = () => {
+        ctx.drawImage(img, 0, 0);
+        const link = document.createElement("a");
+        link.download = `${item.name.toLowerCase().replaceAll(" ", "-")}_Happy_birthday.png`;
+        link.href = canvas.toDataURL("image/png", 1.0);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+
+        setActionLoading(false);
+        onClose();
+        toast.success("Card downloaded successfully");
+      };
+      img.src = url;
+    } catch (error) {
+      console.log(error);
       setActionLoading(false);
-      onClose();
-    } catch (error: any) {
-      toast.error(error.message);
+      toast.error("Failed to download card");
     }
   };
 

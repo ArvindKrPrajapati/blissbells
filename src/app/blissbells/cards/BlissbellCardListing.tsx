@@ -99,16 +99,23 @@ export default function BlissbellCardListing({ data }: Props) {
               )}
             </>
           )}
-          <Image
-            src={card.image}
-            alt="Card"
-            width={1000}
-            height={1000}
-            className="w-full h-auto rounded-lg animate-pulse"
-            loading="lazy"
-            onLoad={(e) => e.currentTarget.classList.remove("animate-pulse")}
-            onError={(e) => e.currentTarget.classList.remove("animate-pulse")}
-          />
+          {card.template ? (
+            <div
+              className="w-full h-auto rounded-lg"
+              dangerouslySetInnerHTML={{ __html: card.template }}
+            />
+          ) : (
+            <Image
+              src={card.image}
+              alt="Card"
+              width={1000}
+              height={1000}
+              className="w-full h-auto rounded-lg animate-pulse"
+              loading="lazy"
+              onLoad={(e) => e.currentTarget.classList.remove("animate-pulse")}
+              onError={(e) => e.currentTarget.classList.remove("animate-pulse")}
+            />
+          )}
         </div>
       ))}
       <Modal
@@ -137,13 +144,22 @@ export default function BlissbellCardListing({ data }: Props) {
                       </h1>
                       <ProcessStepper data={steps} />
                     </div>
-                    <Image
-                      src={selectedCard.image}
-                      alt="Premium Card"
-                      width={2000}
-                      height={2000}
-                      className="w-full h-auto rounded-lg"
-                    />
+                    {selectedCard.template ? (
+                      <div
+                        className="w-full h-auto rounded-lg"
+                        dangerouslySetInnerHTML={{
+                          __html: selectedCard.template,
+                        }}
+                      />
+                    ) : (
+                      <Image
+                        src={selectedCard.image}
+                        alt="Premium Card"
+                        width={2000}
+                        height={2000}
+                        className="w-full h-auto rounded-lg"
+                      />
+                    )}
                   </div>
                 )}
               </ModalBody>
