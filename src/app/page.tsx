@@ -3,7 +3,7 @@ import LandingImageCarousel from "@/components/Carousel/LandingImageCarousel";
 import LandingCTA from "@/components/LandingCTA";
 import Container from "@/components/Container";
 import Footer from "@/components/Footer/Footer";
-import Link from "next/link";
+import ProcessStepper from "@/components/ProcessStepper";
 const font = Sansita({ weight: "400", subsets: ["latin"] });
 
 const images = [
@@ -106,17 +106,7 @@ export default function Home() {
           </h2>
           <div className="flex flex-col-reverse md:flex-row items-center gap-8">
             <div className="flex-1 p-3">
-              <ol className="relative text-gray-500 border-s border-gray-200 dark:border-gray-700 dark:text-gray-400">
-                {howItWorks.map((item) => (
-                  <li className="mb-10 ms-6" key={item.id}>
-                    <span className="absolute flex items-center justify-center w-8 h-8 bg-pink-600 rounded-full -start-4 text-white">
-                      {item.id}
-                    </span>
-                    <h3 className="text-black font-semibold">{item.text}</h3>
-                    <p className="text-sm text-gray-600">{item.subText}</p>
-                  </li>
-                ))}
-              </ol>
+              <ProcessStepper data={howItWorks} />
             </div>
 
             <div className="flex-1">

@@ -33,6 +33,9 @@ body {
 .my-text {
   @apply bg-gradient-to-r from-red-500 to-red-700 bg-clip-text text-transparent;
 }
+.my-btn-bg {
+  @apply bg-gradient-to-r from-red-500 to-red-700;
+}
 .my-secondary-text {
   @apply bg-gradient-to-r from-pink-300 to-gray-100 bg-clip-text text-transparent;
 }
