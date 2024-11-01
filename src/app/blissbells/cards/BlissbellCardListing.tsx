@@ -1,7 +1,10 @@
 "use client";
+import ActionLoader from "@/components/ActionLoader";
 import ProcessStepper from "@/components/ProcessStepper";
+import { apiPost } from "@/lib/apiCalls";
 import { indianNumberFormat } from "@/lib/common";
 import {
+  Badge,
   Button,
   Modal,
   ModalBody,
@@ -11,7 +14,8 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 type Props = {
   data: any[];
 };
@@ -35,29 +39,65 @@ const steps = [
 ];
 export default function BlissbellCardListing({ data }: Props) {
   const { onClose, onOpen, isOpen } = useDisclosure();
+  const [localData, setLocalData] = useState<any>(data);
   const [selectedCard, setSelectedCard] = useState<any>(null);
+  const [actionLoading, setActionLoading] = useState(false);
+  const [numberOfCards, setNumberOfCards] = useState(10);
 
-  const handleUnloackCard = async () => {};
+  useEffect(() => {
+    setLocalData(data);
+  }, [data]);
+
+  const handleUnloackCard = async () => {
+    try {
+      setActionLoading(true);
+      const res = await apiPost(`/user-cards`, {
+        cardTemplateId: selectedCard.id,
+        amount: selectedCard.amount,
+        number_of_cards: numberOfCards,
+        status: "ACTIVE",
+      });
+      setLocalData(
+        localData.map((item: any) =>
+          item.id === selectedCard.id ? { ...item, status: "ACTIVE" } : item
+        )
+      );
+      onClose();
+      toast.success("Card Unlocked Successfully");
+    } catch (error: any) {
+      toast.error(error.message);
+    } finally {
+      setActionLoading(false);
+    }
+  };
 
   return (
     <div className="columns-2 md:columns-3 gap-4 p-2">
-      {data.map((card) => (
+      {localData.map((card: any) => (
         <div
           className="mb-4 w-full bg-gray-100 rounded-lg overflow-hidden relative animate-[appearance-in_600ms]"
           key={card.id}
         >
           {card.premium && (
-            <div
-              onClick={() => {
-                setSelectedCard(card);
-                onOpen();
-              }}
-              className="absolute top-2 right-2 my-btn-bg text-white px-2 py-1 rounded-full text-[0.7rem] z-10 flex items-center justify-center cursor-pointer hover:scale-110 transition-all duration-300"
-            >
-              <div>
-                <i className="fa-solid fa-crown" /> unlock
-              </div>
-            </div>
+            <>
+              {card.status ? (
+                <div className="absolute font-medium top-2 right-2 bg-green-50 text-green-500 border-1 border-green-500  px-3 py-1 rounded-full text-[0.5rem] z-10 flex items-center justify-center">
+                  {card.status}
+                </div>
+              ) : (
+                <div
+                  onClick={() => {
+                    setSelectedCard(card);
+                    onOpen();
+                  }}
+                  className="absolute top-2 right-2 my-btn-bg text-white px-2 py-1 rounded-full text-[0.7rem] z-10 flex items-center justify-center cursor-pointer hover:scale-110 transition-all duration-300"
+                >
+                  <div>
+                    <i className="fa-solid fa-crown" /> unlock
+                  </div>
+                </div>
+              )}
+            </>
           )}
           <Image
             src={card.image}
@@ -81,6 +121,7 @@ export default function BlissbellCardListing({ data }: Props) {
         backdrop="blur"
         isDismissable={false}
         radius="sm"
+        closeButton={!actionLoading}
       >
         <ModalContent>
           {(onClose) => (
@@ -89,6 +130,7 @@ export default function BlissbellCardListing({ data }: Props) {
               <ModalBody>
                 {selectedCard && (
                   <div className="block md:grid md:grid-cols-2 md:gap-4 p-3 px-5">
+                    {actionLoading ? <ActionLoader /> : null}
                     <div>
                       <h1 className=" text-lg mb-3 -ml-3 font-medium">
                         How to use?
@@ -109,7 +151,7 @@ export default function BlissbellCardListing({ data }: Props) {
                 <div>
                   <h2 className="text-xs text-gray-500">Amount</h2>
                   <p className="text-green-500">
-                    Rs {indianNumberFormat(selectedCard.amount)}
+                    Rs {indianNumberFormat(selectedCard.amount * numberOfCards)}
                   </p>
                 </div>
                 <Button
@@ -118,6 +160,8 @@ export default function BlissbellCardListing({ data }: Props) {
                   className="my-btn-bg text-white"
                   radius="sm"
                   startContent={<i className="fa-solid fa-crown" />}
+                  isDisabled={actionLoading}
+                  isLoading={actionLoading}
                 >
                   Unlock
                 </Button>
