@@ -80,7 +80,12 @@ export default function ListBlissBells({ past = false }: { past?: boolean }) {
         </div>
       ) : null}
 
-      <ListBlissbelltem data={data} loading={loading} refresh={_init} />
+      <ListBlissbelltem
+        data={data}
+        loading={loading}
+        refresh={_init}
+        showCreateButton={!past}
+      />
       <br />
       <br />
       {total > limit ? (
