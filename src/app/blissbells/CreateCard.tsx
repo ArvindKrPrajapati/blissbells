@@ -54,7 +54,7 @@ export default function CreateCard({ item }: Props) {
 
       const filename =
         contentDisposition?.split("filename=")[1]?.replace(/['"]/g, "") ||
-        "download.jpg";
+        `${item.name.trim().toLowerCase().replaceAll(" ", "-")}-${item.event.trim().toLowerCase().replaceAll(" ", "-")}.jpg`;
 
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement("a");
@@ -73,6 +73,64 @@ export default function CreateCard({ item }: Props) {
       setActionLoading(false);
     }
   };
+
+  // const handleDownload = async () => {
+  //   try {
+  //     if (!selectedCard?.template) return;
+  //     setActionLoading(true);
+
+  //     const auth = getAuthCookie();
+
+  //     const xhr = new XMLHttpRequest();
+  //     xhr.open("POST", `${baseUrl}/download?buffer=true`, true);
+  //     xhr.setRequestHeader("Content-Type", "application/json");
+  //     xhr.setRequestHeader("Authorization", `Bearer ${auth.accessToken}`);
+  //     xhr.setRequestHeader("Accept", "image/*");
+  //     xhr.responseType = "blob";
+
+  //     xhr.onload = function () {
+  //       if (xhr.status === 201) {
+  //         const contentDisposition = xhr.getResponseHeader(
+  //           "Content-Disposition"
+  //         );
+  //         const filename = contentDisposition
+  //           ? contentDisposition.split("filename=")[1].replace(/['"]/g, "")
+  //           : `${item.name.toLowerCase().replaceAll(" ", "-")}_Happy_birthday.png`;
+
+  //         const blob = xhr.response;
+  //         const url = window.URL.createObjectURL(blob);
+  //         const link = document.createElement("a");
+  //         link.href = url;
+  //         link.download = filename;
+  //         document.body.appendChild(link);
+  //         link.click();
+  //         document.body.removeChild(link);
+  //         window.URL.revokeObjectURL(url);
+
+  //         setActionLoading(false);
+  //         onClose();
+  //         toast.success("Card downloaded successfully");
+  //       }
+  //     };
+
+  //     xhr.onerror = function () {
+  //       setActionLoading(false);
+  //       toast.error("Failed to download card");
+  //     };
+
+  //     xhr.send(
+  //       JSON.stringify({
+  //         userCardId: selectedCard.id,
+  //         blissbellId: item.id,
+  //       })
+  //     );
+  //   } catch (error) {
+  //     console.log(error);
+  //     setActionLoading(false);
+  //     toast.error("Failed to download card");
+  //   }
+  // };
+
   return (
     <>
       <Button
