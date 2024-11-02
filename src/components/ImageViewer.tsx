@@ -23,13 +23,14 @@ export default function ImageViewer({
           }}
         >
           {card.template ? (
-            <div
-              className="w-full h-auto"
-              id={`mycard${index}`}
-              dangerouslySetInnerHTML={{
-                __html: card.template,
-              }}
-            />
+            <div id={`mycard${index}`}>
+              <div
+                className="w-full h-auto"
+                dangerouslySetInnerHTML={{
+                  __html: card.template,
+                }}
+              />
+            </div>
           ) : (
             <Image
               src={card.image}
