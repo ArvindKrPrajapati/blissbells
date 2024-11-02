@@ -2,7 +2,7 @@
 import ImageViewer from "@/components/ImageViewer";
 import PageTitle from "@/components/PageTitle";
 import PaginatedList from "@/components/PaginatedList";
-import { apiGet, apiPost } from "@/lib/apiCalls";
+import { apiGet, apiPost, baseUrl, getAuthCookie } from "@/lib/apiCalls";
 import {
   Button,
   Modal,
@@ -28,83 +28,47 @@ export default function CreateCard({ item }: Props) {
     }
   }, [isOpen]);
 
-  // const handleDownload = async () => {
-  //   try {
-  //     if (!selectedCard?.template) return;
-  //     setActionLoading(true);
-
-  //     // Get the SVG element
-  //     const svgElement = document.querySelector(
-  //       `#${selectedCard?.html_id} svg`
-  //     );
-  //     if (!svgElement) return;
-
-  //     // Create canvas with SVG dimensions
-  //     const canvas = document.createElement("canvas");
-  //     const svgRect = svgElement.getBoundingClientRect();
-  //     canvas.width = svgRect.width;
-  //     canvas.height = svgRect.height;
-
-  //     // Get canvas context and set white background
-  //     const ctx = canvas.getContext("2d");
-  //     if (!ctx) return;
-
-  //     ctx.fillStyle = "white";
-  //     ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-  //     // Convert SVG to data URL
-  //     const svgData = new XMLSerializer().serializeToString(svgElement);
-  //     const svgBlob = new Blob([svgData], {
-  //       type: "image/svg+xml;charset=utf-8",
-  //     });
-  //     const url = URL.createObjectURL(svgBlob);
-
-  //     // Create image and draw to canvas
-  //     const img = new Image();
-  //     img.onload = () => {
-  //       ctx.drawImage(img, 0, 0);
-  //       const link = document.createElement("a");
-  //       link.download = `${item.name.toLowerCase().replaceAll(" ", "-")}_Happy_birthday.png`;
-  //       link.href = canvas.toDataURL("image/png", 1.0);
-  //       document.body.appendChild(link);
-  //       link.click();
-  //       document.body.removeChild(link);
-  //       URL.revokeObjectURL(url);
-
-  //       setActionLoading(false);
-  //       onClose();
-  //       toast.success("Card downloaded successfully");
-  //     };
-  //     img.src = url;
-  //   } catch (error) {
-  //     console.log(error);
-  //     setActionLoading(false);
-  //     toast.error("Failed to download card");
-  //   }
-  // };
-
   const handleDownload = async () => {
     try {
       if (!selectedCard) return;
       setActionLoading(true);
-      const res = await apiPost(`/download`, {
-        userCardId: selectedCard.id,
-        blissbellId: item.id,
+      const auth = getAuthCookie();
+      const res = await fetch(`${baseUrl}/download?buffer=true`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${auth.accessToken}`,
+        },
+        body: JSON.stringify({
+          userCardId: selectedCard.id,
+          blissbellId: item.id,
+        }),
       });
-      if (res.card_url) {
-        window.open(res.card_url, "_blank");
-        toast.success("Card downloaded successfully");
-        onClose();
-      } else {
-        toast.error("Failed to download card");
-      }
+
+      const contentDisposition = res.headers.get("Content-Disposition");
+      const blob = await res.blob();
+
+      const filename =
+        contentDisposition?.split("filename=")[1]?.replace(/['"]/g, "") ||
+        "download.jpg";
+
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+
+      toast.success("Card downloaded successfully");
+      onClose();
     } catch (error: any) {
       toast.error(error.message);
     } finally {
       setActionLoading(false);
     }
   };
-
   return (
     <>
       <Button
