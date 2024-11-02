@@ -81,7 +81,9 @@ export default function BlissbellCardListing({ data }: Props) {
           {card.premium && (
             <>
               {card.status ? (
-                <div className="absolute font-medium top-2 right-2 bg-green-50 text-green-500 border-1 border-green-500  px-3 py-1 rounded-full text-[0.5rem] z-10 flex items-center justify-center">
+                <div
+                  className={`absolute font-medium top-2 right-2 bg-${card.status == "ACTIVE" ? "green" : "red"}-50 text-${card.status == "ACTIVE" ? "green" : "red"}-500 border-1 border-${card.status == "ACTIVE" ? "green" : "red"}-500  px-3 py-1 rounded-full text-[0.5rem] z-10 flex items-center justify-center`}
+                >
                   {card.status}
                 </div>
               ) : (
@@ -90,7 +92,7 @@ export default function BlissbellCardListing({ data }: Props) {
                     setSelectedCard(card);
                     onOpen();
                   }}
-                  className="absolute top-2 right-2 my-btn-bg text-white px-2 py-1 rounded-full text-[0.7rem] z-10 flex items-center justify-center cursor-pointer hover:scale-110 transition-all duration-300"
+                  className="absolute top-2 right-2 bg-yellow-600 text-white px-2 py-1 rounded-full text-[0.7rem] z-10 flex items-center justify-center cursor-pointer hover:scale-110 transition-all duration-300"
                 >
                   <div>
                     <i className="fa-solid fa-crown" /> unlock
