@@ -44,6 +44,10 @@ export default function CreateCard({ item }: Props) {
           blissbellId: item.id,
         }),
       });
+      if (!res.ok) {
+        const er = await res.json();
+        throw er;
+      }
 
       const contentDisposition = res.headers.get("Content-Disposition");
       const blob = await res.blob();
