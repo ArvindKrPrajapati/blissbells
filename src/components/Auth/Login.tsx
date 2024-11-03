@@ -82,6 +82,7 @@ export default function Login({ closeModal }: props) {
         } else {
           toast.error("Something went wrong");
         }
+        setLoading(false);
       } else {
         const res = await apiPost("/authentication", {
           email,
