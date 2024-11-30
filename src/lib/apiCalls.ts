@@ -1,6 +1,6 @@
 let url =
   process.env.NODE_ENV == "production"
-    ? "https://blissbells-api.minclarity.com"
+    ? "https://blissbells-api.onrender.com"
     : "http://localhost:3030";
 
 // url = "https://ratefor-backend.onrender.com";

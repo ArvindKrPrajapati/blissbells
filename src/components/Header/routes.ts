@@ -28,12 +28,12 @@ export const routes: IRoute[] = [
         route: "/blissbells/past",
         icon: "fa-solid fa-history",
       },
-      {
-        id: 3,
-        name: "Blissbell Cards",
-        route: "/blissbells/cards",
-        icon: "fa-solid fa-gift",
-      },
+      // {
+      //   id: 3,
+      //   name: "Blissbell Cards",
+      //   route: "/blissbells/cards",
+      //   icon: "fa-solid fa-gift",
+      // },
     ],
   },
 ];

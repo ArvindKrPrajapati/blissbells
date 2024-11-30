@@ -99,7 +99,7 @@ export default function ListBlissbelltem({
             <p className="text-gray-700 text-xs">Description</p>
             {item.description || "NA"}
             <div className="text-end mt-4 flex items-center justify-end gap-2">
-              {showCreateButton ? <CreateCard item={item} /> : null}
+              {/* {showCreateButton ? <CreateCard item={item} /> : null} */}
               <Button
                 isIconOnly={true}
                 startContent={<i className="fa-solid fa-pen" />}
