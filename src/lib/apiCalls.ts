@@ -1,9 +1,9 @@
 let url =
   process.env.NODE_ENV == "production"
-    ? "https://4gwdx3stqdbvar5anheteefdbi0pmbhx.lambda-url.us-east-1.on.aws"
+    ? "https://8xuhkkrvak.execute-api.us-east-1.amazonaws.com/production"
     : "http://localhost:3030";
 
-url = "https://4gwdx3stqdbvar5anheteefdbi0pmbhx.lambda-url.us-east-1.on.aws";
+url = "https://8xuhkkrvak.execute-api.us-east-1.amazonaws.com/production";
 export const baseUrl = url;
 
 export const getAuthCookie = () => {
