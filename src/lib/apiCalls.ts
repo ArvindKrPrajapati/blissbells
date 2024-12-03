@@ -1,9 +1,9 @@
 let url =
   process.env.NODE_ENV == "production"
-    ? "https://blissbells-api.onrender.com"
+    ? "https://4gwdx3stqdbvar5anheteefdbi0pmbhx.lambda-url.us-east-1.on.aws"
     : "http://localhost:3030";
 
-// url = "https://ratefor-backend.onrender.com";
+url = "https://4gwdx3stqdbvar5anheteefdbi0pmbhx.lambda-url.us-east-1.on.aws";
 export const baseUrl = url;
 
 export const getAuthCookie = () => {
