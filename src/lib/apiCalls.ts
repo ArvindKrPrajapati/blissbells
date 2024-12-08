@@ -3,7 +3,8 @@ let url =
     ? "https://8xuhkkrvak.execute-api.us-east-1.amazonaws.com/production"
     : "http://localhost:3030";
 
-url = "https://8xuhkkrvak.execute-api.us-east-1.amazonaws.com/production";
+// url = "https://8xuhkkrvak.execute-api.us-east-1.amazonaws.com/production";
+url = "https://blissbells-api.onrender.com";
 export const baseUrl = url;
 
 export const getAuthCookie = () => {
